@@ -1,4 +1,4 @@
-import UserRole from "../enums/UserRole.enum";
+import type UserRole from "../enums/UserRole.enum";
 import type { IEntity } from "../interfaces/IEntity.interface";
 
 class User implements IEntity {

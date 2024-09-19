@@ -1,4 +1,4 @@
-import Borrowing from "../entities/Borrowing.entity";
+import type Borrowing from "../entities/Borrowing.entity";
 import type User from "../entities/User.entity";
 import type { IDBRepository } from "../interfaces/IDBRepository.interface";
 import type { IRepository } from "../interfaces/IRepository.interface";

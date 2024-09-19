@@ -1,9 +1,9 @@
-import Book from "../entities/Book.entity";
-import Borrowing from "../entities/Borrowing.entity";
+import type Book from "../entities/Book.entity";
+import type Borrowing from "../entities/Borrowing.entity";
 import type User from "../entities/User.entity";
 import { BookNotAvailableException } from "../exceptions/Book.exception";
-import BookRepository from "../repositories/Book.repository";
-import BorrowingRepository from "../repositories/Borrowing.repository";
+import type BookRepository from "../repositories/Book.repository";
+import type BorrowingRepository from "../repositories/Borrowing.repository";
 
 class BorrowingService {
   constructor(

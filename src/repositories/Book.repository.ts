@@ -1,5 +1,4 @@
 import type Book from "../entities/Book.entity";
-import type BookCategory from "../enums/BookCategory.enum";
 import type { IDBRepository } from "../interfaces/IDBRepository.interface";
 import type { IRepository } from "../interfaces/IRepository.interface";
 

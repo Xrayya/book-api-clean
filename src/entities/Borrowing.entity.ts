@@ -1,6 +1,6 @@
 import type { IEntity } from "../interfaces/IEntity.interface";
-import Book from "./Book.entity";
-import User from "./User.entity";
+import type Book from "./Book.entity";
+import type User from "./User.entity";
 
 class Borrowing implements IEntity {
   constructor(

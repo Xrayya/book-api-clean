@@ -1,14 +1,14 @@
-import User from "../entities/User.entity";
+import type User from "../entities/User.entity";
 import UserRole from "../enums/UserRole.enum";
 import { AuthenticationException } from "../exceptions/Authentication.exception";
-import UserRepository from "../repositories/User.repository";
-import TokenService from "./Token.service";
+import type UserRepository from "../repositories/User.repository";
+import type TokenService from "./Token.service";
 
 class AuthService {
   constructor(
     private userRepository: UserRepository,
     private tokenService: TokenService,
-  ) { }
+  ) {}
 
   async register(
     userName: string,
