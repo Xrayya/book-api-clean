@@ -12,6 +12,12 @@ class BookRepository implements IRepository<Book> {
     return this.bookDBRepository.get(bookId, omit);
   }
 
+  async getAll(
+    omit?: (keyof Book)[] | undefined,
+  ): Promise<Book[] | Omit<Book, keyof Book>[]> {
+    return this.bookDBRepository.getAll(omit);
+  }
+
   async add(book: Omit<Book, "id">): Promise<Book> {
     return this.bookDBRepository.add(book);
   }
@@ -22,12 +28,6 @@ class BookRepository implements IRepository<Book> {
 
   async delete(bookId: number): Promise<Book> {
     return this.bookDBRepository.delete(bookId, true);
-  }
-
-  async getAll(
-    omit?: (keyof Book)[] | undefined,
-  ): Promise<Book[] | Omit<Book, keyof Book>[]> {
-    return this.bookDBRepository.getAll(omit);
   }
 }
 

@@ -13,6 +13,13 @@ class BorrowingRepository implements IRepository<Borrowing> {
     return this.borrowingDBRepository.get(borrowingId, omit);
   }
 
+  async getByUser(
+    user: User,
+    omit?: (keyof Borrowing)[] | undefined,
+  ): Promise<Borrowing[] | Omit<Borrowing, keyof Borrowing>[]> {
+    return this.borrowingDBRepository.getByField("user", user, omit);
+  }
+
   async add(borrowing: Omit<Borrowing, "id">): Promise<Borrowing> {
     return this.borrowingDBRepository.add(borrowing);
   }
@@ -32,13 +39,6 @@ class BorrowingRepository implements IRepository<Borrowing> {
     omit?: (keyof Borrowing)[] | undefined,
   ): Promise<Borrowing[] | Omit<Borrowing, keyof Borrowing>[]> {
     return this.borrowingDBRepository.getAll(omit);
-  }
-
-  async getByUser(
-    user: User,
-    omit?: (keyof Borrowing)[] | undefined,
-  ): Promise<Borrowing[] | Omit<Borrowing, keyof Borrowing>[]> {
-    return this.borrowingDBRepository.getByField("user", user, omit);
   }
 }
 

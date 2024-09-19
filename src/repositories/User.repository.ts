@@ -12,6 +12,12 @@ class UserRepository implements IRepository<User> {
     return this.userDBRepository.get(userId, omit);
   }
 
+  async getAll(
+    omit?: (keyof User)[] | undefined,
+  ): Promise<User[] | Omit<User, keyof User>[]> {
+    return this.userDBRepository.getAll(omit);
+  }
+
   async getByEmail(
     email: string,
     omit?: (keyof User)[] | undefined,
@@ -29,12 +35,6 @@ class UserRepository implements IRepository<User> {
 
   async delete(userId: number): Promise<User> {
     return this.userDBRepository.delete(userId, true);
-  }
-
-  async getAll(
-    omit?: (keyof User)[] | undefined,
-  ): Promise<User[] | Omit<User, keyof User>[]> {
-    return this.userDBRepository.getAll(omit);
   }
 }
 
