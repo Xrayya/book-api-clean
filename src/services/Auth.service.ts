@@ -8,7 +8,7 @@ class AuthService {
   constructor(
     private userRepository: UserRepository,
     private tokenService: TokenService,
-  ) {}
+  ) { }
 
   async register(
     userName: string,
@@ -24,11 +24,15 @@ class AuthService {
       throw new AuthenticationException("User already exists");
     }
 
+    const time = new Date();
+
     return this.userRepository.add({
       name: userName,
       email: userEmail,
       password: userPassword,
       role: UserRole.USER,
+      createdAt: time,
+      updatedAt: time,
     });
   }
 
@@ -50,6 +54,8 @@ class AuthService {
       id: user.id,
       name: user.name,
       email: user.email,
+      createdAt: user.createdAt,
+      updatedAt : user.updatedAt,
     });
 
     return {

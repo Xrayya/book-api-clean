@@ -12,6 +12,8 @@ class Book implements IEntity {
     public category: BookCategory,
     public edition: number,
     public available: boolean,
+    public createdAt: Date,
+    public updatedAt: Date,
   ) { }
 }
 

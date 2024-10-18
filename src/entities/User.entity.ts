@@ -8,6 +8,8 @@ class User implements IEntity {
     public email: string,
     public password: string,
     public role: UserRole,
+    public createdAt: Date,
+    public updatedAt: Date,
   ) { }
 }
 
