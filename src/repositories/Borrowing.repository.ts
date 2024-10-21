@@ -1,23 +1,21 @@
+import type { IBorrowingDBRepository } from "../database/IBorrowingDBRepository.interface";
 import type Borrowing from "../entities/Borrowing.entity";
 import type User from "../entities/User.entity";
-import type { IDBRepository } from "../interfaces/IDBRepository.interface";
-import type { IRepository } from "../interfaces/IRepository.interface";
+import type { IRepository } from "./IRepository.interface";
 
 class BorrowingRepository implements IRepository<Borrowing> {
-  constructor(private borrowingDBRepository: IDBRepository<Borrowing>) {}
+  constructor(private borrowingDBRepository: IBorrowingDBRepository) { }
 
   async get(
     borrowingId: number,
-    omit?: (keyof Borrowing)[] | undefined,
   ): Promise<Borrowing | Omit<Borrowing, keyof Borrowing>> {
-    return this.borrowingDBRepository.get(borrowingId, omit);
+    return this.borrowingDBRepository.get(borrowingId);
   }
 
   async getByUser(
     user: User,
-    omit?: (keyof Borrowing)[] | undefined,
   ): Promise<Borrowing[] | Omit<Borrowing, keyof Borrowing>[]> {
-    return this.borrowingDBRepository.getByField("user", user, omit);
+    return this.borrowingDBRepository.getByUser(user);
   }
 
   async add(borrowing: Omit<Borrowing, "id">): Promise<Borrowing> {
@@ -35,10 +33,8 @@ class BorrowingRepository implements IRepository<Borrowing> {
     return this.borrowingDBRepository.delete(borrowingId);
   }
 
-  async getAll(
-    omit?: (keyof Borrowing)[] | undefined,
-  ): Promise<Borrowing[] | Omit<Borrowing, keyof Borrowing>[]> {
-    return this.borrowingDBRepository.getAll(omit);
+  async getAll(): Promise<Borrowing[] | Omit<Borrowing, keyof Borrowing>[]> {
+    return this.borrowingDBRepository.getAll();
   }
 }
 

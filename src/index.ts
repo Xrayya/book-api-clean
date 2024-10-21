@@ -1,4 +1,4 @@
-import backendApp from "./app";
+import backendApp from "./hono/app";
 
 Bun.serve({
   fetch: backendApp.fetch

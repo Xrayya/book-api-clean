@@ -1,5 +1,5 @@
-import type { IEntity } from "../interfaces/IEntity.interface";
 import type Book from "./Book.entity";
+import type { IEntity } from "./IEntity.interface";
 import type User from "./User.entity";
 
 class Borrowing implements IEntity {

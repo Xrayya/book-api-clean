@@ -1,55 +1,47 @@
+import type { IBookDBRepository } from "../database/IBookDBRepository.interface";
 import type Book from "../entities/Book.entity";
-import type { IDBRepository } from "../interfaces/IDBRepository.interface";
-import type { IRepository } from "../interfaces/IRepository.interface";
+import type { IRepository } from "./IRepository.interface";
 
 class BookRepository implements IRepository<Book> {
-  constructor(private bookDBRepository: IDBRepository<Book>) { }
+  constructor(private bookDBRepository: IBookDBRepository) { }
 
   async get(
     bookId: number,
-    omit?: (keyof Book)[] | undefined,
   ): Promise<Book | Omit<Book, keyof Book>> {
-    return this.bookDBRepository.get(bookId, omit);
+    return this.bookDBRepository.get(bookId);
   }
 
-  async getAll(
-    omit?: (keyof Book)[] | undefined,
-  ): Promise<Book[] | Omit<Book, keyof Book>[]> {
-    return this.bookDBRepository.getAll(omit);
+  async getAll(): Promise<Book[]> {
+    return this.bookDBRepository.getAll();
   }
 
   getByTitle(
     bookTitle: Book["title"],
-    omit?: (keyof Book)[] | undefined,
   ): Promise<Book[] | Omit<Book, keyof Book>[]> {
-    return this.bookDBRepository.getByField("title", bookTitle, omit);
+    return this.bookDBRepository.getByTitle(bookTitle);
   }
 
   getFromCategory(
     category: Book["category"],
-    omit?: (keyof Book)[] | undefined,
   ): Promise<Book[] | Omit<Book, keyof Book>[]> {
-    return this.bookDBRepository.getByField("category", category, omit);
+    return this.bookDBRepository.getFromCategory(category);
   }
 
   getByISBN(
     ISBN: Book["ISBN"],
-    omit?: (keyof Book)[] | undefined,
   ): Promise<Book | Omit<Book, keyof Book>> {
-    return this.bookDBRepository.getByField("ISBN", ISBN, omit);
+    return this.bookDBRepository.getByISBN(ISBN)
   }
 
   getFromPublisher(
     publisher: Book["publisher"],
-    omit?: (keyof Book)[] | undefined,
   ): Promise<Book[] | Omit<Book, keyof Book>[]> {
-    return this.bookDBRepository.getByField("publisher", publisher, omit);
+    return this.bookDBRepository.getFromPublisher(publisher)
   }
 
   getAvailable(
-    omit?: (keyof Book)[] | undefined,
   ): Promise<Book[] | Omit<Book, keyof Book>[]> {
-    return this.bookDBRepository.getByField("available", true, omit);
+    return this.bookDBRepository.getAvailable();
   }
 
   async add(book: Omit<Book, "id">): Promise<Book> {

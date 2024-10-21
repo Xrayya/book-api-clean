@@ -1,5 +1,5 @@
 import type BookCategory from "../enums/BookCategory.enum";
-import type { IEntity } from "../interfaces/IEntity.interface";
+import type { IEntity } from "./IEntity.interface";
 
 class Book implements IEntity {
   constructor(

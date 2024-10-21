@@ -15,10 +15,7 @@ class AuthService {
     userEmail: string,
     userPassword: string,
   ): Promise<User> {
-    const user = (await this.userRepository.getByEmail(userEmail, [
-      "role",
-      "password",
-    ])) as Omit<User, "role" | "password">;
+    const user = this.userRepository.getPasswordByEmail(userEmail);
 
     if (user) {
       throw new AuthenticationException("User already exists");
