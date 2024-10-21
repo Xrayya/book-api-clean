@@ -14,52 +14,43 @@ datasource db {
 }
 
 model user {
-  id         Int      @id
+  id         Int      @id @default(autoincrement())
   name       String
   email      String   @unique
   password   String
-  role_id    Int
+  role       String
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  role      user_role   @relation(fields: [role_id], references: [id])
   borrowing borrowing[]
 }
 
-model user_role {
-  id   Int    @id
-  name String
-
-  user user[]
-}
-
 model book {
-  id             Int      @id
+  id             Int      @id @default(autoincrement())
   title          String
   author         String
   isbn           String
   publisher      String
   published_date DateTime
-  category_id    Int
+  category_code  String
   edition        Int
   available      Boolean
   created_at     DateTime @default(now())
   updated_at     DateTime @updatedAt
 
-  category  book_category @relation(fields: [category_id], references: [id])
+  category  book_category @relation(fields: [category_code], references: [code])
   borrowing borrowing[]
 }
 
 model book_category {
-  id   Int    @id
+  code String @id
   name String
-  code String
 
   Book book[]
 }
 
 model borrowing {
-  id          Int      @id
+  id          Int      @id @default(autoincrement())
   user_id     Int
   book_id     Int
   borrow_date DateTime
