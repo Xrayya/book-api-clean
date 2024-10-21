@@ -176,3 +176,7 @@ dist
 
 # Bun lock
 bun.lockb
+
+# Prisma
+
+prisma/migrations/
