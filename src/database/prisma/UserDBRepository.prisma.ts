@@ -4,6 +4,8 @@ import type { IUserDBRepository } from "../IUserDBRepository.interface";
 import UserRole from "../../enums/UserRole.enum";
 
 class UserPrismaRepository implements IUserDBRepository {
+  private prisma = new PrismaClient();
+
   async getByEmail(email: User["email"]): Promise<User> {
     const result = await this.prisma.user.findUnique({
       where: {
@@ -25,7 +27,6 @@ class UserPrismaRepository implements IUserDBRepository {
       updatedAt: result.updated_at,
     };
   }
-  private prisma = new PrismaClient();
 
   async getPasswordByEmail(email: User["email"]): Promise<User["password"]> {
     const result = await this.prisma.user.findUniqueOrThrow({
