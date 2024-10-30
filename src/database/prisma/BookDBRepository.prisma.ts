@@ -43,8 +43,40 @@ class BookPrismaRepository implements IBookDBRepository {
       }),
     );
   }
-  getFromCategory(category: Book["category"]): Promise<Book[]> {
-    throw new Error("Method not implemented.");
+  async getFromCategory(category: Book["category"]): Promise<Book[]> {
+    const result = await this.prisma.book.findMany({
+      where: {
+        category_code: category,
+      },
+    });
+
+    return result.map(
+      ({
+        id,
+        title,
+        author,
+        isbn: ISBN,
+        publisher,
+        published_date: publishedDate,
+        category_code,
+        edition,
+        available,
+        created_at: createdAt,
+        updated_at: updatedAt,
+      }) => ({
+        id,
+        title,
+        author,
+        ISBN,
+        publisher,
+        publishedDate,
+        category: bookCategoryCodeMapper(category_code),
+        edition,
+        available,
+        createdAt,
+        updatedAt,
+      }),
+    );
   }
   getByISBN(ISBN: Book["ISBN"]): Promise<Book> {
     throw new Error("Method not implemented.");
