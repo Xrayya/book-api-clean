@@ -1,10 +1,30 @@
-import { PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 import type User from "../../entities/User.entity";
 import type { IUserDBRepository } from "../IUserDBRepository.interface";
 import UserRole from "../../enums/UserRole.enum";
 
 class UserPrismaRepository implements IUserDBRepository {
   private prisma = new PrismaClient();
+
+  private dbToEntityRemap({
+    id,
+    email,
+    password,
+    name,
+    role: roleString,
+    created_at: createdAt,
+    updated_at: updatedAt,
+  }: Prisma.userGetPayload<{}>) {
+    return {
+      id,
+      email,
+      password,
+      name,
+      role: roleString === "ADMIN" ? UserRole.ADMIN : UserRole.USER,
+      createdAt,
+      updatedAt,
+    };
+  }
 
   async getByEmail(email: User["email"]): Promise<User> {
     const result = await this.prisma.user.findUnique({
@@ -17,15 +37,7 @@ class UserPrismaRepository implements IUserDBRepository {
       throw new Error("User not found");
     }
 
-    return {
-      id: result.id,
-      email: result.email,
-      password: result.password,
-      name: result.name,
-      role: result.role === "ADMIN" ? UserRole.ADMIN : UserRole.USER,
-      createdAt: result.created_at,
-      updatedAt: result.updated_at,
-    };
+    return this.dbToEntityRemap(result);
   }
 
   async getPasswordByEmail(email: User["email"]): Promise<User["password"]> {
@@ -41,6 +53,7 @@ class UserPrismaRepository implements IUserDBRepository {
     if (!result) {
       throw new Error("User not found");
     }
+
     return result.password;
   }
   async get(id: number): Promise<User> {
@@ -54,16 +67,9 @@ class UserPrismaRepository implements IUserDBRepository {
       throw new Error("User not found");
     }
 
-    return {
-      id: result.id,
-      email: result.email,
-      password: result.password,
-      name: result.name,
-      role: result.role === "ADMIN" ? UserRole.ADMIN : UserRole.USER,
-      createdAt: result.created_at,
-      updatedAt: result.updated_at,
-    };
+    return this.dbToEntityRemap(result);
   }
+
   async add(item: Omit<User, "id">): Promise<User> {
     const result = await this.prisma.user.create({
       data: {
@@ -74,15 +80,7 @@ class UserPrismaRepository implements IUserDBRepository {
       },
     });
 
-    return {
-      id: result.id,
-      email: result.email,
-      password: result.password,
-      name: result.name,
-      role: result.role === "ADMIN" ? UserRole.ADMIN : UserRole.USER,
-      createdAt: result.created_at,
-      updatedAt: result.updated_at,
-    };
+    return this.dbToEntityRemap(result);
   }
 
   async update(id: number, item: Omit<User, "id">): Promise<User> {
@@ -98,16 +96,9 @@ class UserPrismaRepository implements IUserDBRepository {
       },
     });
 
-    return {
-      id: result.id,
-      email: result.email,
-      password: result.password,
-      name: result.name,
-      role: result.role === "ADMIN" ? UserRole.ADMIN : UserRole.USER,
-      createdAt: result.created_at,
-      updatedAt: result.updated_at,
-    };
+    return this.dbToEntityRemap(result);
   }
+
   async delete(id: number, _cascade?: boolean): Promise<User> {
     const result = await this.prisma.user.delete({
       where: {
@@ -115,28 +106,13 @@ class UserPrismaRepository implements IUserDBRepository {
       },
     });
 
-    return {
-      id: result.id,
-      email: result.email,
-      password: result.password,
-      name: result.name,
-      role: result.role === "ADMIN" ? UserRole.ADMIN : UserRole.USER,
-      createdAt: result.created_at,
-      updatedAt: result.updated_at,
-    };
+    return this.dbToEntityRemap(result);
   }
+
   async getAll(): Promise<User[]> {
     const result = await this.prisma.user.findMany();
 
-    return result.map((item) => ({
-      id: item.id,
-      email: item.email,
-      password: item.password,
-      name: item.name,
-      role: item.role === "ADMIN" ? UserRole.ADMIN : UserRole.USER,
-      createdAt: item.created_at,
-      updatedAt: item.updated_at,
-    }));
+    return result.map((item) => this.dbToEntityRemap(item));
   }
 }
 
