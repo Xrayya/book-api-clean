@@ -2,6 +2,7 @@ import { Prisma, PrismaClient } from "@prisma/client";
 import type Book from "../../entities/Book.entity";
 import type { IBookDBRepository } from "../IBookDBRepository.interface";
 import { bookCategoryCodeMapper } from "../../utils";
+import { BookNotFoundException } from "../../exceptions/Book.exception";
 
 class BookPrismaRepository implements IBookDBRepository {
   private prisma = new PrismaClient();
@@ -45,6 +46,7 @@ class BookPrismaRepository implements IBookDBRepository {
 
     return result.map((book) => this.dbToEntityRemap(book));
   }
+
   async getFromCategory(category: Book["category"]): Promise<Book[]> {
     const result = await this.prisma.book.findMany({
       where: {
@@ -54,14 +56,41 @@ class BookPrismaRepository implements IBookDBRepository {
 
     return result.map((book) => this.dbToEntityRemap(book));
   }
-  getByISBN(ISBN: Book["ISBN"]): Promise<Book> {
-    throw new Error("Method not implemented.");
+
+  async getByISBN(ISBN: Book["ISBN"]): Promise<Book> {
+    const result = await this.prisma.book.findUnique({
+      where: {
+        isbn: ISBN,
+      },
+    });
+
+    if (!result) {
+      throw new BookNotFoundException();
+    }
+
+    return this.dbToEntityRemap(result);
   }
-  getFromPublisher(publisher: Book["publisher"]): Promise<Book[]> {
-    throw new Error("Method not implemented.");
+
+  async getFromPublisher(publisher: Book["publisher"]): Promise<Book[]> {
+    const result = await this.prisma.book.findMany({
+      where: {
+        publisher: {
+          contains: publisher,
+        },
+      },
+    });
+
+    return result.map((book) => this.dbToEntityRemap(book));
   }
-  getAvailable(): Promise<Book[]> {
-    throw new Error("Method not implemented.");
+
+  async getAvailable(): Promise<Book[]> {
+    const result = await this.prisma.book.findMany({
+      where: {
+        available: true,
+      },
+    });
+
+    return result.map((book) => this.dbToEntityRemap(book));
   }
   get(id: number): Promise<Book> {
     throw new Error("Method not implemented.");
