@@ -29,7 +29,7 @@ model book {
   id             Int      @id @default(autoincrement())
   title          String
   author         String
-  isbn           String
+  isbn           String   @unique
   publisher      String
   published_date DateTime
   category_code  String
@@ -40,6 +40,8 @@ model book {
 
   category  book_category @relation(fields: [category_code], references: [code])
   borrowing borrowing[]
+
+  @@index(fields: [isbn])
 }
 
 model book_category {
