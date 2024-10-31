@@ -8,17 +8,21 @@ class AuthService {
   constructor(
     private userRepository: UserRepository,
     private tokenService: TokenService,
-  ) { }
+  ) {}
 
   async register(
     userName: string,
     userEmail: string,
     userPassword: string,
   ): Promise<User> {
-    const user = this.userRepository.getPasswordByEmail(userEmail);
+    try {
+      await this.userRepository.getPasswordByEmail(userEmail);
 
-    if (user) {
       throw new AuthenticationException("User already exists");
+    } catch (error) {
+      if (error instanceof AuthenticationException) {
+        throw error;
+      }
     }
 
     const time = new Date();
@@ -52,7 +56,7 @@ class AuthService {
       name: user.name,
       email: user.email,
       createdAt: user.createdAt,
-      updatedAt : user.updatedAt,
+      updatedAt: user.updatedAt,
     });
 
     return {
