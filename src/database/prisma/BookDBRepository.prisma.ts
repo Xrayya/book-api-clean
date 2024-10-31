@@ -8,28 +8,18 @@ class BookPrismaRepository implements IBookDBRepository {
   private prisma = new PrismaClient();
 
   private dbToEntityRemap({
-    id,
-    title,
-    author,
     isbn: ISBN,
-    publisher,
     published_date: publishedDate,
     category_code,
-    edition,
-    available,
     created_at: createdAt,
     updated_at: updatedAt,
-  }: Prisma.bookGetPayload<{}>) {
+    ...rest
+  }: Prisma.bookGetPayload<{}>) : Book {
     return {
-      id,
-      title,
-      author,
+      ...rest,
       ISBN,
-      publisher,
       publishedDate,
       category: bookCategoryCodeMapper(category_code),
-      edition,
-      available,
       createdAt,
       updatedAt,
     };

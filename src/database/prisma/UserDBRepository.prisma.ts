@@ -7,19 +7,13 @@ class UserPrismaRepository implements IUserDBRepository {
   private prisma = new PrismaClient();
 
   private dbToEntityRemap({
-    id,
-    email,
-    password,
-    name,
     role: roleString,
     created_at: createdAt,
     updated_at: updatedAt,
-  }: Prisma.userGetPayload<{}>) {
+    ...rest
+  }: Prisma.userGetPayload<{}>): User {
     return {
-      id,
-      email,
-      password,
-      name,
+      ...rest,
       role: roleString === "ADMIN" ? UserRole.ADMIN : UserRole.USER,
       createdAt,
       updatedAt,
@@ -70,29 +64,32 @@ class UserPrismaRepository implements IUserDBRepository {
     return this.dbToEntityRemap(result);
   }
 
-  async add(item: Omit<User, "id">): Promise<User> {
+  async add({ email, password, name, role }: Omit<User, "id">): Promise<User> {
     const result = await this.prisma.user.create({
       data: {
-        email: item.email,
-        password: item.password,
-        name: item.name,
-        role: item.role === UserRole.ADMIN ? "ADMIN" : "USER",
+        email,
+        password,
+        name,
+        role: role === UserRole.ADMIN ? "ADMIN" : "USER",
       },
     });
 
     return this.dbToEntityRemap(result);
   }
 
-  async update(id: number, item: Omit<User, "id">): Promise<User> {
+  async update(
+    id: number,
+    { email, password, name, role }: Omit<User, "id">,
+  ): Promise<User> {
     const result = await this.prisma.user.update({
       where: {
         id: id,
       },
       data: {
-        email: item.email,
-        password: item.password,
-        name: item.name,
-        role: item.role === UserRole.ADMIN ? "ADMIN" : "USER",
+        email,
+        password,
+        name,
+        role: role === UserRole.ADMIN ? "ADMIN" : "USER",
       },
     });
 
