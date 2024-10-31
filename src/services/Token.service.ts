@@ -1,5 +1,5 @@
 import type User from "../entities/User.entity";
-import type { ITokenizer } from "../interfaces/ITokenizer.interface";
+import type { ITokenizer } from "../tokenizer/ITokenizer.interface";
 
 class TokenService {
   constructor(private tokernizer: ITokenizer) { }
