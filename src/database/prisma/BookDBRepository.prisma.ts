@@ -92,20 +92,86 @@ class BookPrismaRepository implements IBookDBRepository {
 
     return result.map((book) => this.dbToEntityRemap(book));
   }
-  get(id: number): Promise<Book> {
-    throw new Error("Method not implemented.");
+
+  async get(id: number): Promise<Book> {
+    const result = await this.prisma.book.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!result) {
+      throw new BookNotFoundException();
+    }
+
+    return this.dbToEntityRemap(result);
   }
-  add(item: Omit<Book, "id">): Promise<Book> {
-    throw new Error("Method not implemented.");
+
+  async add({
+    ISBN: isbn,
+    publishedDate: published_date,
+    category: category_code,
+    createdAt: created_at,
+    updatedAt: updated_at,
+    ...rest
+  }: Omit<Book, "id">): Promise<Book> {
+    const result = await this.prisma.book.create({
+      data: {
+        ...rest,
+        isbn,
+        published_date,
+        category_code,
+        created_at,
+        updated_at,
+      },
+    });
+
+    return this.dbToEntityRemap(result);
   }
-  update(id: number, item: Omit<Book, "id">): Promise<Book> {
-    throw new Error("Method not implemented.");
+
+  async update(
+    id: number,
+    {
+      ISBN: isbn,
+      publishedDate: published_date,
+      category: category_code,
+      createdAt: created_at,
+      updatedAt: updated_at,
+      ...rest
+    }: Omit<Book, "id">,
+  ): Promise<Book> {
+    const result = await this.prisma.book.update({
+      where: {
+        id,
+      },
+      data: {
+        id,
+        ...rest,
+        isbn,
+        published_date,
+        category_code,
+        created_at,
+        updated_at,
+      },
+    });
+
+    return this.dbToEntityRemap(result);
   }
-  delete(id: number, cascade?: boolean): Promise<Book> {
-    throw new Error("Method not implemented.");
+
+  async delete(id: number, _cascade?: boolean): Promise<Book> {
+    const result = await this.prisma.book.delete({
+      where: {
+        id,
+      },
+    });
+
+    return this.dbToEntityRemap(result);
   }
-  getAll(): Promise<Book[]> {
-    throw new Error("Method not implemented.");
+
+  async getAll(): Promise<Book[]> {
+    const result = await this.prisma.book.findMany();
+
+    return result.map((book) => this.dbToEntityRemap(book));
   }
 }
 
