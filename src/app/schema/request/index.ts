@@ -1,2 +1,2 @@
-export {loginSchema} from "./login.request.schema";
-export {registerSchema} from "./register.request.schema";
+export { loginSchema } from "./auth/login.schema";
+export { registerSchema } from "./auth/register.schema";

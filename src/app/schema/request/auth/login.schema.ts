@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { BaseRequestSchema } from "./Base";
+import { BaseRequestSchema } from "../Base";
 
 export const loginSchema = new BaseRequestSchema({
   jsonSchema: z.object({
