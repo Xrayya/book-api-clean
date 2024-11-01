@@ -8,13 +8,13 @@ class AuthService {
   constructor(
     private userRepository: UserRepository,
     private tokenService: TokenService,
-  ) {}
+  ) { }
 
   async register(
     userName: string,
     userEmail: string,
     userPassword: string,
-  ): Promise<User> {
+  ): Promise<Omit<User, "password">> {
     try {
       await this.userRepository.getPasswordByEmail(userEmail);
 
@@ -27,7 +27,7 @@ class AuthService {
 
     const time = new Date();
 
-    return this.userRepository.add({
+    const newUser = await this.userRepository.add({
       name: userName,
       email: userEmail,
       password: userPassword,
@@ -35,13 +35,22 @@ class AuthService {
       createdAt: time,
       updatedAt: time,
     });
+
+    return {
+      id: newUser.id,
+      name: newUser.name,
+      email: newUser.email,
+      role: newUser.role,
+      createdAt: newUser.createdAt,
+      updatedAt: newUser.updatedAt,
+    };
   }
 
   async login(
     userEmail: string,
     userPassword: string,
-  ): Promise<{ user: User; token: string }> {
-    const user = (await this.userRepository.getByEmail(userEmail)) as User;
+  ): Promise<{ user: Omit<User, "password">; token: string }> {
+    const user = await this.userRepository.getByEmail(userEmail);
 
     if (!user) {
       throw new AuthenticationException("Invalid login credential");
@@ -60,7 +69,14 @@ class AuthService {
     });
 
     return {
-      user,
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt,
+      },
       token,
     };
   }
