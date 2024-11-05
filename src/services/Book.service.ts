@@ -31,6 +31,30 @@ class BookService {
       ? (this.bookRepository.getAvailable() as Promise<Book[]>)
       : (this.bookRepository.getAll() as Promise<Book[]>);
   }
+
+  async getBookByParams(params: {
+    search?: string;
+    title?: string;
+    titleStartWith?: string;
+    titleEndWith?: string;
+    ISBN?: string;
+    publisher?: string;
+    category?: Book["category"];
+    edition?: string;
+    sortBy?:
+    | "id"
+    | "title"
+    | "author"
+    | "ISBN"
+    | "publisher"
+    | "publishedDate"
+    | "category"
+    | "edition";
+    available?: boolean;
+  }): Promise<Book[]> {
+    // TODO: Implement the logic to get books by the given parameters
+    return [];
+  }
 }
 
 export default BookService;
