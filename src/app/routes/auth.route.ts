@@ -3,7 +3,7 @@ import { authService } from "../../adapter";
 import { validateJsonRequest } from "../middlewares/validation.middleware";
 import { loginSchema, registerSchema } from "../schemas/request";
 
-const authRoute = new Hono()
+export const authRoute = new Hono()
   .post("/login", ...validateJsonRequest(loginSchema), async (c) => {
     const { email, password } = c.req.valid("json");
     const { user, token } = await authService.login(email, password);
@@ -16,5 +16,3 @@ const authRoute = new Hono()
 
     return c.json({ user }, 201);
   });
-
-export default authRoute;
