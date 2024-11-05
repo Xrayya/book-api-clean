@@ -1,7 +1,7 @@
 import { createFactory } from "hono/factory";
 import type { ZodRawShape } from "zod";
 import { validator } from "hono/validator";
-import type { BaseRequestSchema } from "../schema/request/Base";
+import type { BaseRequestSchema } from "../schemas/request/Base";
 
 const handlersFactory = createFactory();
 
