@@ -1,12 +1,11 @@
 import { Hono } from "hono";
-import { validateRequest } from "../middlewares/validation.middleware";
-import { getBooksSchema } from "../schemas/request/book/books.schema";
 import { bookService } from "../../adapter";
+import { validateRequest } from "../middlewares/validation.middleware";
+import { bookDetailsSchema } from "../schemas/request/books/bookDetails.schema";
+import { getBooksSchema } from "../schemas/request/books/books.schema";
 
-export const booksRoute = new Hono().get(
-  "/",
-  ...validateRequest(getBooksSchema),
-  async (c) => {
+export const booksRoute = new Hono()
+  .get("/", ...validateRequest(getBooksSchema), async (c) => {
     const {
       search,
       title,
@@ -22,13 +21,27 @@ export const booksRoute = new Hono().get(
 
     // TODO: Implement the logic to get books by the given parameters using bookService.getBookByParams
 
-    const res = await bookService.getAllBooks(available == "true");
+    const books = await bookService.getAllBooks(available == "true");
 
     return c.json(
       {
-        books: res,
+        books,
       },
       200,
     );
-  },
-);
+  })
+  .get("/:id/details", ...validateRequest(bookDetailsSchema), async (c) => {
+    const { id } = c.req.valid("param");
+
+    const { id: bookId, ...bookData } = await bookService.getBookInfoById(
+      parseInt(id),
+    );
+
+    return c.json(
+      {
+        bookId,
+        bookData,
+      },
+      200,
+    );
+  });
