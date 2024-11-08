@@ -3,7 +3,7 @@ import type User from "../entities/User.entity";
 import type { IRepository } from "./IRepository.interface";
 
 class UserRepository implements IRepository<User> {
-  constructor(private userDBRepository: IUserDBRepository) {}
+  constructor(private userDBRepository: IUserDBRepository) { }
 
   async get(userId: number): Promise<User> {
     return this.userDBRepository.get(userId);
@@ -21,11 +21,14 @@ class UserRepository implements IRepository<User> {
     return this.userDBRepository.getPasswordByEmail(email);
   }
 
-  async add(user: Omit<User, "id">): Promise<User> {
+  async add(user: Omit<User, "id" | "createdAt" | "updatedAt">): Promise<User> {
     return this.userDBRepository.add(user);
   }
 
-  async update(userId: number, userData: Omit<User, "id">): Promise<User> {
+  async update(
+    userId: number,
+    userData: Omit<User, "id" | "createdAt" | "updatedAt">,
+  ): Promise<User> {
     return this.userDBRepository.update(userId, userData);
   }
 

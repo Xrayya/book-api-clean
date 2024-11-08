@@ -5,9 +5,7 @@ import type { IRepository } from "./IRepository.interface";
 class BookRepository implements IRepository<Book> {
   constructor(private bookDBRepository: IBookDBRepository) { }
 
-  async get(
-    bookId: number,
-  ): Promise<Book> {
+  async get(bookId: number): Promise<Book> {
     return this.bookDBRepository.get(bookId);
   }
 
@@ -15,40 +13,34 @@ class BookRepository implements IRepository<Book> {
     return this.bookDBRepository.getAll();
   }
 
-  getByTitle(
-    bookTitle: Book["title"],
-  ): Promise<Book[]> {
+  getByTitle(bookTitle: Book["title"]): Promise<Book[]> {
     return this.bookDBRepository.getByTitle(bookTitle);
   }
 
-  getFromCategory(
-    category: Book["category"],
-  ): Promise<Book[]> {
+  getFromCategory(category: Book["category"]): Promise<Book[]> {
     return this.bookDBRepository.getFromCategory(category);
   }
 
-  getByISBN(
-    ISBN: Book["ISBN"],
-  ): Promise<Book> {
-    return this.bookDBRepository.getByISBN(ISBN)
+  getByISBN(ISBN: Book["ISBN"]): Promise<Book> {
+    return this.bookDBRepository.getByISBN(ISBN);
   }
 
-  getFromPublisher(
-    publisher: Book["publisher"],
-  ): Promise<Book[]> {
-    return this.bookDBRepository.getFromPublisher(publisher)
+  getFromPublisher(publisher: Book["publisher"]): Promise<Book[]> {
+    return this.bookDBRepository.getFromPublisher(publisher);
   }
 
-  getAvailable(
-  ): Promise<Book[]> {
+  getAvailable(): Promise<Book[]> {
     return this.bookDBRepository.getAvailable();
   }
 
-  async add(book: Omit<Book, "id">): Promise<Book> {
+  add(book: Omit<Book, "id" | "createdAt" | "updatedAt">): Promise<Book> {
     return this.bookDBRepository.add(book);
   }
 
-  async update(bookId: number, bookData: Omit<Book, "id">): Promise<Book> {
+  update(
+    bookId: number,
+    bookData: Omit<Book, "id" | "createdAt" | "updatedAt">,
+  ): Promise<Book> {
     return this.bookDBRepository.update(bookId, bookData);
   }
 
