@@ -100,7 +100,7 @@ class BookPrismaRepository implements IBookDBRepository {
   async add({
     category: categoryCode,
     ...rest
-  }: Omit<Book, "id">): Promise<Book> {
+  }: Omit<Book, "id" | "createdAt" | "updatedAt">): Promise<Book> {
     const result = await this.prisma.book.create({
       data: {
         ...rest,
@@ -116,7 +116,7 @@ class BookPrismaRepository implements IBookDBRepository {
     {
       category: categoryCode,
       ...rest
-    }: Omit<Book, "id">,
+    }: Omit<Book, "id" | "createdAt" | "updatedAt">,
   ): Promise<Book> {
     const result = await this.prisma.book.update({
       where: {
