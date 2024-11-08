@@ -13,31 +13,31 @@ class BookRepository implements IRepository<Book> {
     return this.bookDBRepository.getAll();
   }
 
-  getByTitle(bookTitle: Book["title"]): Promise<Book[]> {
+  async getByTitle(bookTitle: Book["title"]): Promise<Book[]> {
     return this.bookDBRepository.getByTitle(bookTitle);
   }
 
-  getFromCategory(category: Book["category"]): Promise<Book[]> {
+  async getFromCategory(category: Book["category"]): Promise<Book[]> {
     return this.bookDBRepository.getFromCategory(category);
   }
 
-  getByISBN(ISBN: Book["ISBN"]): Promise<Book> {
+  async getByISBN(ISBN: Book["ISBN"]): Promise<Book> {
     return this.bookDBRepository.getByISBN(ISBN);
   }
 
-  getFromPublisher(publisher: Book["publisher"]): Promise<Book[]> {
+  async getFromPublisher(publisher: Book["publisher"]): Promise<Book[]> {
     return this.bookDBRepository.getFromPublisher(publisher);
   }
 
-  getAvailable(): Promise<Book[]> {
+  async getAvailable(): Promise<Book[]> {
     return this.bookDBRepository.getAvailable();
   }
 
-  add(book: Omit<Book, "id" | "createdAt" | "updatedAt">): Promise<Book> {
+  async add(book: Omit<Book, "id" | "createdAt" | "updatedAt">): Promise<Book> {
     return this.bookDBRepository.add(book);
   }
 
-  update(
+  async update(
     bookId: number,
     bookData: Omit<Book, "id" | "createdAt" | "updatedAt">,
   ): Promise<Book> {
