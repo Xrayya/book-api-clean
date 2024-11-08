@@ -7,7 +7,7 @@ class BookRepository implements IRepository<Book> {
 
   async get(
     bookId: number,
-  ): Promise<Book | Omit<Book, keyof Book>> {
+  ): Promise<Book> {
     return this.bookDBRepository.get(bookId);
   }
 
@@ -17,30 +17,30 @@ class BookRepository implements IRepository<Book> {
 
   getByTitle(
     bookTitle: Book["title"],
-  ): Promise<Book[] | Omit<Book, keyof Book>[]> {
+  ): Promise<Book[]> {
     return this.bookDBRepository.getByTitle(bookTitle);
   }
 
   getFromCategory(
     category: Book["category"],
-  ): Promise<Book[] | Omit<Book, keyof Book>[]> {
+  ): Promise<Book[]> {
     return this.bookDBRepository.getFromCategory(category);
   }
 
   getByISBN(
     ISBN: Book["ISBN"],
-  ): Promise<Book | Omit<Book, keyof Book>> {
+  ): Promise<Book> {
     return this.bookDBRepository.getByISBN(ISBN)
   }
 
   getFromPublisher(
     publisher: Book["publisher"],
-  ): Promise<Book[] | Omit<Book, keyof Book>[]> {
+  ): Promise<Book[]> {
     return this.bookDBRepository.getFromPublisher(publisher)
   }
 
   getAvailable(
-  ): Promise<Book[] | Omit<Book, keyof Book>[]> {
+  ): Promise<Book[]> {
     return this.bookDBRepository.getAvailable();
   }
 
