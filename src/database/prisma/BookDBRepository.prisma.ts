@@ -8,18 +8,18 @@ class BookPrismaRepository implements IBookDBRepository {
   private prisma = new PrismaClient();
 
   private dbToEntityRemap({
-    isbn: ISBN,
-    published_date: publishedDate,
-    category_code,
-    created_at: createdAt,
-    updated_at: updatedAt,
+    ISBN,
+    publishedDate,
+    categoryCode,
+    createdAt,
+    updatedAt,
     ...rest
-  }: Prisma.bookGetPayload<{}>) : Book {
+  }: Prisma.BookGetPayload<{}>): Book {
     return {
       ...rest,
       ISBN,
       publishedDate,
-      category: bookCategoryCodeMapper(category_code),
+      category: bookCategoryCodeMapper(categoryCode),
       createdAt,
       updatedAt,
     };
@@ -40,7 +40,7 @@ class BookPrismaRepository implements IBookDBRepository {
   async getFromCategory(category: Book["category"]): Promise<Book[]> {
     const result = await this.prisma.book.findMany({
       where: {
-        category_code: category,
+        categoryCode: category,
       },
     });
 
@@ -50,7 +50,7 @@ class BookPrismaRepository implements IBookDBRepository {
   async getByISBN(ISBN: Book["ISBN"]): Promise<Book> {
     const result = await this.prisma.book.findUnique({
       where: {
-        isbn: ISBN,
+        ISBN: ISBN,
       },
     });
 
@@ -98,21 +98,13 @@ class BookPrismaRepository implements IBookDBRepository {
   }
 
   async add({
-    ISBN: isbn,
-    publishedDate: published_date,
-    category: category_code,
-    createdAt: created_at,
-    updatedAt: updated_at,
+    category: categoryCode,
     ...rest
   }: Omit<Book, "id">): Promise<Book> {
     const result = await this.prisma.book.create({
       data: {
         ...rest,
-        isbn,
-        published_date,
-        category_code,
-        created_at,
-        updated_at,
+        categoryCode,
       },
     });
 
@@ -122,11 +114,7 @@ class BookPrismaRepository implements IBookDBRepository {
   async update(
     id: number,
     {
-      ISBN: isbn,
-      publishedDate: published_date,
-      category: category_code,
-      createdAt: created_at,
-      updatedAt: updated_at,
+      category: categoryCode,
       ...rest
     }: Omit<Book, "id">,
   ): Promise<Book> {
@@ -137,11 +125,7 @@ class BookPrismaRepository implements IBookDBRepository {
       data: {
         id,
         ...rest,
-        isbn,
-        published_date,
-        category_code,
-        created_at,
-        updated_at,
+        categoryCode,
       },
     });
 

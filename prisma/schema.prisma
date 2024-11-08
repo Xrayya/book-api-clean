@@ -13,54 +13,61 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model user {
-  id         Int      @id @default(autoincrement())
-  name       String
-  email      String   @unique
-  password   String
-  role       String
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+  role      String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
-  borrowing borrowing[]
+  borrowing Borrowing[]
+
+  @@map("user")
 }
 
-model book {
-  id             Int      @id @default(autoincrement())
-  title          String
-  author         String
-  isbn           String   @unique
-  publisher      String
-  published_date DateTime
-  category_code  String
-  edition        Int
-  available      Boolean
-  created_at     DateTime @default(now())
-  updated_at     DateTime @updatedAt
+model Book {
+  id            Int      @id @default(autoincrement())
+  title         String
+  author        String
+  ISBN          String   @unique @map("isbn")
+  publisher     String
+  publishedDate DateTime @map("published_date")
+  categoryCode  String   @map("category_code")
+  edition       Int
+  available     Boolean
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
 
-  category  book_category @relation(fields: [category_code], references: [code])
-  borrowing borrowing[]
+  category  BookCategory @relation(fields: [categoryCode], references: [code])
+  borrowing Borrowing[]
 
-  @@index(fields: [isbn])
+  @@index(fields: [ISBN])
+  @@map("book")
 }
 
-model book_category {
+model BookCategory {
   code String @id
   name String
 
-  Book book[]
+  Book Book[]
+
+  @@map("book_category")
 }
 
-model borrowing {
-  id          Int      @id @default(autoincrement())
-  user_id     Int
-  book_id     Int
-  borrow_date DateTime
-  return_date DateTime
-  returned    Boolean
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
+model Borrowing {
+  id         Int      @id @default(autoincrement())
+  userId     Int      @map("user_id")
+  bookId     Int      @map("book_id")
+  borrowDate DateTime @map("borrow_date")
+  returnDate DateTime @map("return_date")
+  isReturned Boolean  @default(false) @map("returned")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
 
-  user user @relation(fields: [user_id], references: [id])
-  book book @relation(fields: [book_id], references: [id])
+  user User @relation(fields: [userId], references: [id])
+  book Book @relation(fields: [bookId], references: [id])
+
+  @@map("borrowing")
 }

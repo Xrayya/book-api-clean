@@ -8,10 +8,10 @@ class UserPrismaRepository implements IUserDBRepository {
 
   private dbToEntityRemap({
     role: roleString,
-    created_at: createdAt,
-    updated_at: updatedAt,
+    createdAt,
+    updatedAt,
     ...rest
-  }: Prisma.userGetPayload<{}>): User {
+  }: Prisma.UserGetPayload<{}>): User {
     return {
       ...rest,
       role: roleString === "ADMIN" ? UserRole.ADMIN : UserRole.USER,
@@ -64,13 +64,11 @@ class UserPrismaRepository implements IUserDBRepository {
     return this.dbToEntityRemap(result);
   }
 
-  async add({ email, password, name, role }: Omit<User, "id">): Promise<User> {
+  async add({ role, ...rest }: Omit<User, "id">): Promise<User> {
     const result = await this.prisma.user.create({
       data: {
-        email,
-        password,
-        name,
         role: role === UserRole.ADMIN ? "ADMIN" : "USER",
+        ...rest,
       },
     });
 
@@ -79,17 +77,15 @@ class UserPrismaRepository implements IUserDBRepository {
 
   async update(
     id: number,
-    { email, password, name, role }: Omit<User, "id">,
+    { role, ...rest }: Omit<User, "id">,
   ): Promise<User> {
     const result = await this.prisma.user.update({
       where: {
         id: id,
       },
       data: {
-        email,
-        password,
-        name,
         role: role === UserRole.ADMIN ? "ADMIN" : "USER",
+        ...rest,
       },
     });
 
