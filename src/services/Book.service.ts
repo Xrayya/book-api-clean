@@ -5,19 +5,19 @@ class BookService {
   constructor(private bookRepository: BookRepository) { }
 
   async getBookInfoById(bookId: Book["id"]): Promise<Book> {
-    return this.bookRepository.get(bookId) as Promise<Book>;
+    return this.bookRepository.get(bookId);
   }
 
   async getBooksByTitle(bookTitle: Book["title"]): Promise<Book[]> {
-    return this.bookRepository.getByTitle(bookTitle) as Promise<Book[]>;
+    return this.bookRepository.getByTitle(bookTitle);
   }
 
   async getBooksByCategory(bookCategory: Book["category"]): Promise<Book[]> {
-    return this.bookRepository.getFromCategory(bookCategory) as Promise<Book[]>;
+    return this.bookRepository.getFromCategory(bookCategory);
   }
 
-  async getBooksByISBN(bookISBN: Book["ISBN"]): Promise<Book[]> {
-    return this.bookRepository.getByISBN(bookISBN) as Promise<Book[]>;
+  async getBooksByISBN(bookISBN: Book["ISBN"]): Promise<Book> {
+    return this.bookRepository.getByISBN(bookISBN);
   }
 
   async getBooksByPublisher(bookPublisher: Book["publisher"]): Promise<Book[]> {
