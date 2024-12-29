@@ -7,4 +7,17 @@ export interface IBookDBRepository extends IDBRepository<Book> {
   getByISBN(ISBN: Book["ISBN"]): Promise<Book>;
   getFromPublisher(publisher: Book["publisher"]): Promise<Book[]>;
   getAvailable(): Promise<Book[]>;
+  // getBooksWithAttributeValue(
+  //   value: string,
+  //   sortedBy:
+  //     | "id"
+  //     | "title"
+  //     | "author"
+  //     | "ISBN"
+  //     | "publisher"
+  //     | "publishedDate"
+  //     | "category"
+  //     | "edition",
+  //   sortOrder: "asc" | "desc",
+  // ): Promise<Book[]>;
 }

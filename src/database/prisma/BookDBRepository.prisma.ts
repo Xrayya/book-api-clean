@@ -147,6 +147,57 @@ class BookPrismaRepository implements IBookDBRepository {
 
     return result.map((book) => this.dbToEntityRemap(book));
   }
+
+  // async getBooksWithAttributeValue(
+  //   value: string,
+  //   sortedBy:
+  //     | "id"
+  //     | "title"
+  //     | "author"
+  //     | "ISBN"
+  //     | "publisher"
+  //     | "publishedDate"
+  //     | "category"
+  //     | "edition",
+  //   sortOrder: "asc" | "desc" = "asc",
+  // ): Promise<Book[]> {
+  //   const result = await this.prisma.book.findMany({
+  //     where: {
+  //       OR: [
+  //         {
+  //           title: {
+  //             contains: value,
+  //           },
+  //         },
+  //         {
+  //           author: {
+  //             contains: value,
+  //           },
+  //         },
+  //         {
+  //           ISBN: {
+  //             contains: value,
+  //           },
+  //         },
+  //         {
+  //           publisher: {
+  //             contains: value,
+  //           },
+  //         },
+  //         {
+  //           categoryCode: {
+  //             contains: value,
+  //           },
+  //         },
+  //       ],
+  //     },
+  //     orderBy: {
+  //       [sortedBy]: sortOrder,
+  //     }
+  //   });
+
+  //   return result.map((book) => this.dbToEntityRemap(book));
+  // }
 }
 
 export default BookPrismaRepository;

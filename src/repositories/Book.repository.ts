@@ -47,6 +47,10 @@ class BookRepository implements IRepository<Book> {
   async delete(bookId: number): Promise<Book> {
     return this.bookDBRepository.delete(bookId, true);
   }
+
+  // async getByBookWithAttributeValue(value: string) : Promise<Book[]> {
+  //   return this.bookDBRepository.getBooksWithAttributeValue(value);
+  // }
 }
 
 export default BookRepository;
