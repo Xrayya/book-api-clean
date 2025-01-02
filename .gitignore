@@ -180,3 +180,5 @@ bun.lockb
 # Prisma
 
 prisma/migrations/
+
+design/*.png
