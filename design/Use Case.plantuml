@@ -1,0 +1,56 @@
+@startuml
+left to right direction
+
+:Unregistered User: as uUser
+:Registered User: as rUser
+:Logged In User: as lUser
+:Client: as client
+:Admin: as admin
+
+rectangle "Book Management System" {
+  usecase "Register" as register
+  usecase "Login" as login
+  usecase "Logout" as logout
+
+  'For Logged In Users
+  usecase "Get Book List" as gBookList
+  usecase "Filter Book By ISBN" as fISBN
+  usecase "Filter Book By Title" as fTitle
+  usecase "Filter Book By Publisher" as fPub
+  usecase "Filter Book By Range of Publish Year" as fRYear
+  usecase "Filter Book By Category" as fCategory
+  usecase "Filter Book By Availability" as fAvail
+  usecase "Search Book" as search
+
+  'For Client
+  usecase "Borrow Books" as borrow
+
+  'For Admin
+  usecase "Manage Book Borrowing Status" as mBorrowStat
+  usecase "Manage User Suspension Status" as mUserSuspension
+  'usecase "Manage Borrowing Rules" as mBorrowRules
+}
+
+lUser <|-- client
+lUser <|-- admin
+
+uUser -- register
+
+rUser -- login
+
+lUser -- logout
+lUser -- gBookList
+lUser -- search
+
+fISBN .up.> gBookList : extends
+fTitle .up.> gBookList : extends
+fPub .up.> gBookList : extends
+fRYear .up.> gBookList : extends
+fCategory .up.> gBookList : extends
+fAvail .up.> gBookList : extends
+
+client -- borrow
+
+admin -- mBorrowStat
+admin -- mUserSuspension
+@enduml
