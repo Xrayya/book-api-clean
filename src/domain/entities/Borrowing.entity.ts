@@ -6,7 +6,7 @@ class Borrowing implements IEntity {
   constructor(
     public id: number,
     public user: User,
-    public books: Book[],
+    public book: Book,
     public borrowDate: Date,
     public returnDate: Date,
     public isReturned: boolean = false,
