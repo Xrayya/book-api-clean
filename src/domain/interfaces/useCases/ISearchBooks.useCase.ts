@@ -1,5 +1,5 @@
 import type Book from "@domain/entities/Book.entity";
 
-export interface ISearchBookUseCase {
+export interface ISearchBooksUseCase {
   execute(query: string): Promise<Book[]>;
 }
