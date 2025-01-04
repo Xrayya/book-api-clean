@@ -39,7 +39,7 @@ lUser -- gBookList
 
 search .up.> gBookList : extends
 
-note top of search : Search by id, title, ISBN or publisher
+note top of search : Search by id, title, ISBN, author, or publisher
 
 fRYear .up.> search : extends
 fCategory .up.> search : extends
