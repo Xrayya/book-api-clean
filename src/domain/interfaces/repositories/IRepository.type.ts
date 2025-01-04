@@ -1,4 +1,4 @@
-import type { IEntity } from "../entities/IEntity.interface";
+import type { IEntity } from "../IEntity.type";
 
 export interface IRepository<T extends IEntity> {
   get(id: number): Promise<T>;

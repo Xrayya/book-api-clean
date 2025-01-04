@@ -1,12 +1,12 @@
+import type { IEntity } from "../interfaces/IEntity.type";
 import type Book from "./Book.entity";
-import type { IEntity } from "./IEntity.interface";
 import type User from "./User.entity";
 
 class Borrowing implements IEntity {
   constructor(
     public id: number,
     public user: User,
-    public book: Book,
+    public books: Book[],
     public borrowDate: Date,
     public returnDate: Date,
     public isReturned: boolean = false,

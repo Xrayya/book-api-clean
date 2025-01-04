@@ -1,5 +1,5 @@
 import type UserRole from "../enums/UserRole.enum";
-import type { IEntity } from "./IEntity.interface";
+import type { IEntity } from "../interfaces/IEntity.type";
 
 class User implements IEntity {
   constructor(
