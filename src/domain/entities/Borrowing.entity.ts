@@ -9,7 +9,6 @@ class Borrowing implements IEntity {
     public book: Book,
     public borrowDate: Date,
     public returnDate: Date,
-    public isReturned: boolean = false,
     public createdAt: Date,
     public updatedAt: Date,
   ) { }
