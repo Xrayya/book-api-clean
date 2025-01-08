@@ -64,7 +64,6 @@ model Borrowing {
   bookId     Int      @map("book_id")
   borrowDate DateTime @map("borrow_date")
   returnDate DateTime @map("return_date")
-  isReturned Boolean  @default(false) @map("returned")
   createdAt  DateTime @default(now()) @map("created_at")
   updatedAt  DateTime @updatedAt @map("updated_at")
 
