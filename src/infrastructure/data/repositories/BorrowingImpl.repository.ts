@@ -115,14 +115,18 @@ class BorrowingRepositoryImpl implements IBorrowingRepository {
 
   async update(
     id: number,
-    item: Omit<Borrowing, "id" | "createdAt" | "updatedAt">,
+    {
+      book,
+      user,
+      ...rest
+    }: Partial<Omit<Borrowing, "id" | "createdAt" | "updatedAt">>,
   ): Promise<Borrowing> {
     const result = await this.prisma.borrowing.update({
       where: { id },
       data: {
-        ...item,
-        book: { connect: { id: item.book.id } },
-        user: { connect: { id: item.user.id } },
+        ...rest,
+        book: { connect: { id: book?.id } },
+        user: { connect: { id: user?.id } },
       },
       include: { user: true, book: true },
     });

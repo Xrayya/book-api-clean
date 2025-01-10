@@ -67,7 +67,7 @@ class UserRepositoryImpl implements IUserRepository {
 
   async update(
     id: number,
-    { role, ...rest }: Omit<User, "id" | "createdAt" | "updatedAt">,
+    { role, ...rest }: Partial<Omit<User, "id" | "createdAt" | "updatedAt">>,
   ): Promise<User> {
     const result = await this.prisma.user.update({
       where: { id },

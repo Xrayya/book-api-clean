@@ -31,11 +31,11 @@ class BookRepositoryImpl implements IBookRepository {
     arg:
       | Book["id"]
       | {
-        title?: Book["title"];
-        ISBN?: Book["ISBN"];
-        author?: Book["author"];
-        publisher?: Book["publisher"];
-      },
+          title?: Book["title"];
+          ISBN?: Book["ISBN"];
+          author?: Book["author"];
+          publisher?: Book["publisher"];
+        },
   ): Promise<Book | Book[]> {
     if (typeof arg === "number") {
       const result = await this.prisma.book.findUnique({ where: { id: arg } });
@@ -70,7 +70,7 @@ class BookRepositoryImpl implements IBookRepository {
     {
       category: categoryCode,
       ...rest
-    }: Omit<Book, "id" | "createdAt" | "updatedAt">,
+    }: Partial<Omit<Book, "id" | "createdAt" | "updatedAt">>,
   ): Promise<Book> {
     const result = await this.prisma.book.update({
       where: { id },
