@@ -59,13 +59,13 @@ model BookCategory {
 }
 
 model Borrowing {
-  id         Int      @id @default(autoincrement())
-  userId     Int      @map("user_id")
-  bookId     Int      @map("book_id")
-  borrowDate DateTime @map("borrow_date")
-  returnDate DateTime @map("return_date")
-  createdAt  DateTime @default(now()) @map("created_at")
-  updatedAt  DateTime @updatedAt @map("updated_at")
+  id         Int       @id @default(autoincrement())
+  userId     Int       @map("user_id")
+  bookId     Int       @map("book_id")
+  borrowDate DateTime  @map("borrow_date")
+  returnDate DateTime? @map("return_date")
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
 
   user User @relation(fields: [userId], references: [id])
   book Book @relation(fields: [bookId], references: [id])
