@@ -4,7 +4,7 @@ import type { IUserRepository } from "@domain/interfaces/repositories/IUser.repo
 import type { IRegisterUseCase } from "@domain/interfaces/useCases/IRegister.useCase";
 
 class RegisterUseCaseImpl implements IRegisterUseCase {
-  constructor(private userRepository: IUserRepository) { }
+  constructor(private userRepository: IUserRepository) {}
 
   async execute(
     name: User["name"],
@@ -16,6 +16,7 @@ class RegisterUseCaseImpl implements IRegisterUseCase {
       name,
       password,
       role: UserRole.CLIENT,
+      token: null,
     });
   }
 }
