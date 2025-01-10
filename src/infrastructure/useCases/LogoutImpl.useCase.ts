@@ -9,19 +9,15 @@ class LogoutUseCaseImpl implements ILogoutUseCase {
     private tokenizer: ITokenizer,
   ) {}
 
-  async execute(userId: User["id"], token: string): Promise<boolean> {
-    const decoded = this.tokenizer.decode(token) as {
+  async execute(token: string): Promise<boolean> {
+    const { id } = this.tokenizer.decode(token) as {
       id: User["id"];
       name: User["name"];
       email: User["email"];
       role: User["role"];
     };
 
-    if (decoded.id !== userId) {
-      throw new Error("Invalid token");
-    }
-
-    await this.userRepository.update(userId, {
+    await this.userRepository.update(id, {
       token: null,
     });
 
