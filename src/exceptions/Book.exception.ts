@@ -1,13 +1,16 @@
+import type Book from "@domain/entities/Book.entity";
+
 export class BookNotFoundException extends Error {
-  constructor() {
-    super("Book not found");
-    this.name = "Book Not Found Error"
+  constructor(identifier: string) {
+    super(`Book with ${identifier} not found`);
+    this.name = "Book Not Found Error";
   }
 }
 
 export class BookNotAvailableException extends Error {
-  constructor() {
-    super("Book not available");
-    this.name = "Book Not Available Error"
+  constructor(identifier: Pick<Book, "id" | "title" | "ISBN">) {
+    const { id, title, ISBN } = identifier;
+    super(`Book ${title} (id: ${id}, ISBN: ${ISBN}) not available`);
+    this.name = "Book Not Available Error";
   }
 }
