@@ -8,10 +8,10 @@ class Borrowing implements IEntity {
     public user: User,
     public book: Book,
     public borrowDate: Date,
-    public returnDate: Date,
+    public returnDate: Date | null,
     public createdAt: Date,
     public updatedAt: Date,
-  ) { }
+  ) {}
 }
 
 export default Borrowing;
