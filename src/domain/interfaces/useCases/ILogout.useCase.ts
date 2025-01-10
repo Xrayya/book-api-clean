@@ -1,3 +1,5 @@
+import type User from "@domain/entities/User.entity";
+
 export interface ILogoutUseCase {
-  execute(): Promise<void>;
+  execute(userId: User["id"], token: string): Promise<boolean>;
 }
