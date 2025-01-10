@@ -1,15 +1,15 @@
-import type User from "../entities/User.entity";
-import type UserRepository from "../repositories/User.repository";
+import type User from "@domain/entities/User.entity";
+import type { IUserRepository } from "@domain/interfaces/repositories/IUser.repository";
 
 class UserService {
-  private userRepository: UserRepository;
+  private userRepository: IUserRepository;
 
-  constructor(userRepo: UserRepository) {
+  constructor(userRepo: IUserRepository) {
     this.userRepository = userRepo;
   }
 
   async getUserProfile(userId: User["id"]): Promise<User> {
-    return this.userRepository.get(userId, ["password"]) as Promise<User>;
+    return this.userRepository.get(userId) as Promise<User>;
   }
 
   async updateUserProfile(
