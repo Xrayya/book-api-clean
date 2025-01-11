@@ -37,10 +37,17 @@ class BorrowingService {
   }
 
   async confirmReturn(
-    userId: User["id"],
+    userToken: string,
     bookId: Book["id"],
   ): Promise<Borrowing> {
-    return this.confirmReturnUseCase.execute(userId, bookId);
+    const { id } = this.tokenizer.decode(userToken) as {
+      id: User["id"];
+      name: User["name"];
+      email: User["email"];
+      role: User["role"];
+    };
+
+    return this.confirmReturnUseCase.execute(id, bookId);
   }
 }
 
