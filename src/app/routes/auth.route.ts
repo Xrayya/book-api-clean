@@ -1,5 +1,5 @@
+import { authService } from "@app/bootstrap";
 import { Hono } from "hono";
-import { authService } from "../../adapter";
 import { validateJsonRequest } from "../middlewares/validation.middleware";
 import { loginSchema, registerSchema } from "../schemas/request";
 
