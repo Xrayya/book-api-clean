@@ -9,7 +9,7 @@ export const bookDetailsSchema = new BaseRequestSchema({
   paramSchema: z.object({
     id: z.string().refine((id) => {
       return /^\d+$/.test(id);
-    }),
+    }, "Book ID must be a number"),
   }),
   querySchema: z.object({}),
 });
