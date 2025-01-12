@@ -19,8 +19,18 @@ class BookService {
     return this.getBookListUseCase.execute();
   }
 
-  async search(keyword: string): Promise<Book[]> {
-    return this.searchBooksUseCase.execute(keyword);
+  async search(
+    keyword?: string,
+    filter?: {
+      availability?: Book["available"];
+      cateogory?: Book["category"];
+      publishedYearRange?: {
+        start?: Book["publishedYear"];
+        end?: Book["publishedYear"];
+      };
+    },
+  ): Promise<Book[]> {
+    return this.searchBooksUseCase.execute(keyword, filter);
   }
 
   async get(id: Book["id"]): Promise<Book> {

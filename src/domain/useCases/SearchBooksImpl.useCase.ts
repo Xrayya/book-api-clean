@@ -6,7 +6,7 @@ class SearchBooksUseCaseImpl implements ISearchBooksUseCase {
   constructor(private bookRepository: IBookRepository) {}
 
   execute(
-    query: string,
+    query?: string,
     filter?: {
       availability?: Book["available"];
       cateogory?: Book["category"];
@@ -21,7 +21,7 @@ class SearchBooksUseCaseImpl implements ISearchBooksUseCase {
       ISBN: query,
       author: query,
       publisher: query,
-    });
+    }, filter);
   }
 }
 
