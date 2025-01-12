@@ -35,7 +35,7 @@ model Book {
   author        String
   ISBN          String   @unique @map("isbn")
   publisher     String
-  publishedDate DateTime @map("published_date")
+  publishedYear Int      @map("published_year")
   categoryCode  String   @map("category_code")
   edition       Int
   available     Boolean

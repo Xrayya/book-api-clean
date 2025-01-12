@@ -8,13 +8,13 @@ class Book implements IEntity {
     public author: string,
     public ISBN: string,
     public publisher: string,
-    public publishedDate: Date,
+    public publishedYear: number,
     public category: BookCategory,
     public edition: number,
     public available: boolean,
     public createdAt: Date,
     public updatedAt: Date,
-  ) { }
+  ) {}
 }
 
 export default Book;
