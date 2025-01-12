@@ -3,9 +3,19 @@ import type { IBookRepository } from "@domain/interfaces/repositories/IBook.repo
 import type { ISearchBooksUseCase } from "@domain/interfaces/useCases/ISearchBooks.useCase";
 
 class SearchBooksUseCaseImpl implements ISearchBooksUseCase {
-  constructor(private bookRepository: IBookRepository) { }
+  constructor(private bookRepository: IBookRepository) {}
 
-  async execute(query: string): Promise<Book[]> {
+  execute(
+    query: string,
+    filter?: {
+      availability?: Book["available"];
+      cateogory?: Book["category"];
+      publishedYearRange?: {
+        start?: Book["publishedYear"];
+        end?: Book["publishedYear"];
+      };
+    },
+  ): Promise<Book[]> {
     return this.bookRepository.get({
       title: query,
       ISBN: query,

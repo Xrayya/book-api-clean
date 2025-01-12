@@ -21,14 +21,24 @@ class BookRepositoryImpl implements IBookRepository {
   }
 
   get(id: Book["id"]): Promise<Book>;
-  get(query: {
-    title?: Book["title"];
-    ISBN?: Book["ISBN"];
-    author?: Book["author"];
-    publisher?: Book["publisher"];
-  }): Promise<Book[]>;
+  get(
+    query: {
+      title?: Book["title"];
+      ISBN?: Book["ISBN"];
+      author?: Book["author"];
+      publisher?: Book["publisher"];
+    },
+    filter?: {
+      availability?: Book["available"];
+      cateogory?: Book["category"];
+      publishedYearRange?: {
+        start?: Book["publishedYear"];
+        end?: Book["publishedYear"];
+      };
+    },
+  ): Promise<Book[]>;
   async get(
-    arg:
+    arg1:
       | Book["id"]
       | {
           title?: Book["title"];
@@ -36,17 +46,35 @@ class BookRepositoryImpl implements IBookRepository {
           author?: Book["author"];
           publisher?: Book["publisher"];
         },
+    arg2?: {
+      availability?: Book["available"];
+      cateogory?: Book["category"];
+      publishedYearRange?: {
+        start?: Book["publishedYear"];
+        end?: Book["publishedYear"];
+      };
+    },
   ): Promise<Book | Book[]> {
-    if (typeof arg === "number") {
-      const result = await this.prisma.book.findUnique({ where: { id: arg } });
+    if (typeof arg1 === "number") {
+      const result = await this.prisma.book.findUnique({ where: { id: arg1 } });
 
       if (!result) {
         throw new Error("Book not found");
       }
 
       return this.dbToEntityRemap(result);
-    } else if (typeof arg === "object") {
-      const result = await this.prisma.book.findMany({ where: arg });
+    } else if (typeof arg1 === "object") {
+      const result = await this.prisma.book.findMany({
+        where: {
+          ...arg1,
+          available: arg2?.availability,
+          categoryCode: arg2?.cateogory,
+          publishedYear: {
+            gte: arg2?.publishedYearRange?.start,
+            lte: arg2?.publishedYearRange?.end,
+          },
+        },
+      });
 
       return result.map(this.dbToEntityRemap);
     }
