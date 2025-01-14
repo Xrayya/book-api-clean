@@ -9,9 +9,10 @@ class User implements IEntity {
     public password: string,
     public role: UserRole,
     public token: string | null,
+    public isSuspended: boolean,
     public createdAt: Date,
     public updatedAt: Date,
-  ) {}
+  ) { }
 }
 
 export default User;

@@ -12,11 +12,13 @@ class UserRepositoryImpl implements IUserRepository {
 
   private dbToEntityRemap({
     role: roleString,
+    suspended: isSuspended,
     ...rest
   }: Prisma.UserGetPayload<{}>): User {
     return {
       ...rest,
       role: roleString === "ADMIN" ? UserRole.ADMIN : UserRole.CLIENT,
+      isSuspended,
     };
   }
 
