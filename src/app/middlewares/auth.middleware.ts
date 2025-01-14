@@ -1,5 +1,6 @@
 import { tokenizer } from "@app/bootstrap";
 import type User from "@domain/entities/User.entity";
+import { AuthenticationException } from "@exceptions/Authentication.exception";
 import { createMiddleware } from "hono/factory";
 import type { JwtPayload } from "jsonwebtoken";
 
@@ -16,7 +17,7 @@ export const verifyAuth = createMiddleware<{
   const token = c.req.header().authorization?.split(" ")[1];
 
   if (!token) {
-    return c.json({ message: "Unauthorized" }, 401);
+    throw new AuthenticationException("Unauthorized");
   }
 
   const user = tokenizer.decode(token) as JwtPayload & {
