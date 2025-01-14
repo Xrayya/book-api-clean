@@ -1,5 +1,6 @@
 import { bookCategoryCodeMapper } from "@/utils";
 import { bookService } from "@app/bootstrap";
+import { verifyAuth } from "@app/middlewares/auth.middleware";
 import { validateRequest } from "@app/middlewares/validation.middleware";
 import { bookDetailsSchema } from "@app/schemas/request/books/bookDetails.schema";
 import { getBooksSchema } from "@app/schemas/request/books/books.schema";
@@ -7,6 +8,7 @@ import { Hono } from "hono";
 
 export const booksRoute = new Hono()
   .basePath("/books")
+  .use(verifyAuth)
   .get("/", ...validateRequest(getBooksSchema), async (c) => {
     const {
       search,
