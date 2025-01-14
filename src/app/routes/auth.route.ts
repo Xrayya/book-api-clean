@@ -4,6 +4,7 @@ import { validateJsonRequest } from "../middlewares/validation.middleware";
 import { loginSchema, registerSchema } from "../schemas/request";
 
 export const authRoute = new Hono()
+  .basePath("/auth")
   .post("/login", ...validateJsonRequest(loginSchema), async (c) => {
     const { email, password } = c.req.valid("json");
     const { user, token } = await authService.login(email, password);
