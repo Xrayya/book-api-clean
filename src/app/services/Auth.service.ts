@@ -64,23 +64,6 @@ class AuthService {
   async logout(token: string): Promise<boolean> {
     return this.logoutUseCase.execute(token);
   }
-
-  async verifyToken(token: string): Promise<Omit<User, "password">> {
-    const { id } = this.tokenizer.decode(token) as {
-      id: User["id"];
-      name: User["name"];
-      email: User["email"];
-      role: User["role"];
-    };
-
-    const { password: _pw, ...rest } = await this.userRepository.get(id);
-
-    if (rest.token !== token) {
-      throw new AuthenticationException("Invalid token");
-    }
-
-    return rest;
-  }
 }
 
 export default AuthService;
