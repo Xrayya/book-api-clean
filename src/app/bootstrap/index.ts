@@ -1,3 +1,4 @@
+import AdminService from "@app/services/Admin.service";
 import AuthService from "@app/services/Auth.service";
 import BookService from "@app/services/Book.service";
 import BorrowingService from "@app/services/Borrowing.service";
@@ -18,3 +19,4 @@ export const borrowingService = new BorrowingService(
   borrowingRepository,
   tokenizer,
 );
+export const adminService = new AdminService(userRepository);
