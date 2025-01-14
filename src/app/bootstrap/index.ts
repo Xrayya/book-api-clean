@@ -10,7 +10,7 @@ const userRepository = new UserRepositoryImpl();
 const bookRepository = new BookRepositoryImpl();
 const borrowingRepository = new BorrowingRepositoryImpl();
 
-const tokenizer = new JWTTokenizer();
+export const tokenizer = new JWTTokenizer();
 
 export const authService = new AuthService(userRepository, tokenizer);
 export const bookService = new BookService(bookRepository);
