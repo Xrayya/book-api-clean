@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import type { ITokenizer } from "./ITokenizer.interface";
+import type { ITokenizer } from "./ITokenizer.type";
 
 class JWTTokenizer implements ITokenizer {
   encode(data: string | Buffer | object): string {
