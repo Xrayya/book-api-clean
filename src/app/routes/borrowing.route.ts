@@ -15,12 +15,17 @@ export const borrowingRoute = new Hono()
     const { id } = c.get("authUser");
     const borrowing = await borrowingService.borrowMany(id, bookIds);
 
-    return c.json({ borrowing }, 201);
+    return c.json({ borrowedBooks: borrowing }, 201);
   })
-  .post("/return", verifyAdmin, ...validateJsonRequest(returnSchema), async (c) => {
-    const { bookId } = c.req.valid("json");
-    const { id } = c.get("authUser");
-    const borrowing = await borrowingService.confirmReturn(id, bookId);
+  .post(
+    "/return",
+    verifyAdmin,
+    ...validateJsonRequest(returnSchema),
+    async (c) => {
+      const { bookId } = c.req.valid("json");
+      const { id } = c.get("authUser");
+      const borrowing = await borrowingService.confirmReturn(id, bookId);
 
-    return c.json({ borrowing }, 200);
-  });
+      return c.json({ returnedBook: borrowing }, 200);
+    },
+  );
