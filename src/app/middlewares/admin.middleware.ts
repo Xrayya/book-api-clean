@@ -5,19 +5,19 @@ import { createMiddleware } from "hono/factory";
 import type { JwtPayload } from "jsonwebtoken";
 
 export const verifyAdmin = createMiddleware(async (c, next) => {
-  if (!c.get("authUser")) {
-    throw new AuthenticationException("Unauthorized");
-  }
-
-  const { role } = c.get("authUser") as JwtPayload & {
+  const authUser = c.get("authUser") as JwtPayload & {
     id: User["id"];
     name: User["name"];
     email: User["email"];
     role: User["role"];
   };
 
-  if (role !== UserRole.ADMIN) {
+  if (!authUser) {
     throw new AuthenticationException("Unauthorized");
+  }
+
+  if (authUser.role !== UserRole.ADMIN) {
+    throw new AuthenticationException("Unauthorized, only admin can access this route");
   }
 
   await next();
