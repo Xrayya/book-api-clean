@@ -1,7 +1,7 @@
 import type User from "@domain/entities/User.entity";
 import type { IUserRepository } from "@domain/interfaces/repositories/IUser.repository";
 import type { ILoginUseCase } from "@domain/interfaces/useCases/ILogin.useCase";
-import { AuthenticationException } from "@exceptions/Authentication.exception";
+import { AuthenticationException } from "@exceptions/Auth.exception";
 import type { ITokenizer } from "@infrastructure/tokenizer/ITokenizer.type";
 
 class LoginUseCaseImpl implements ILoginUseCase {

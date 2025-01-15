@@ -1,6 +1,7 @@
 import { bookCategoryCodeMapper } from "@/utils";
 import type Book from "@domain/entities/Book.entity";
 import type { IBookRepository } from "@domain/interfaces/repositories/IBook.repository";
+import { BookNotFoundException } from "@exceptions/Book.exception";
 import { Prisma, PrismaClient } from "@prisma/client";
 
 class BookRepositoryImpl implements IBookRepository {
@@ -59,7 +60,7 @@ class BookRepositoryImpl implements IBookRepository {
       const result = await this.prisma.book.findUnique({ where: { id: arg1 } });
 
       if (!result) {
-        throw new Error("Book not found");
+        throw new BookNotFoundException(`id: ${arg1}`);
       }
 
       return this.dbToEntityRemap(result);

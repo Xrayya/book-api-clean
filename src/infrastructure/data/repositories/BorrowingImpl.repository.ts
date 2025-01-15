@@ -2,6 +2,7 @@ import { bookCategoryCodeMapper } from "@/utils";
 import type Borrowing from "@domain/entities/Borrowing.entity";
 import UserRole from "@domain/enums/UserRole.enum";
 import type { IBorrowingRepository } from "@domain/interfaces/repositories/IBorrowing.repository";
+import { BorrowingNotFoundException } from "@exceptions/Borrowing.exception";
 import { Prisma, PrismaClient } from "@prisma/client";
 
 class BorrowingRepositoryImpl implements IBorrowingRepository {
@@ -13,7 +14,7 @@ class BorrowingRepositoryImpl implements IBorrowingRepository {
 
   private dbToEntityRemap({
     book: { categoryCode, ...bookRest },
-    user: { role: roleString, ...userRest },
+    user: { role: roleString, suspended: isSuspended, ...userRest },
     ...rest
   }: Prisma.BorrowingGetPayload<{
     include: { book: any; user: any };
@@ -22,6 +23,7 @@ class BorrowingRepositoryImpl implements IBorrowingRepository {
       user: {
         ...userRest,
         role: roleString === "ADMIN" ? UserRole.ADMIN : UserRole.CLIENT,
+        isSuspended,
       },
       book: {
         category: bookCategoryCodeMapper(categoryCode),
@@ -53,7 +55,7 @@ class BorrowingRepositoryImpl implements IBorrowingRepository {
       });
 
       if (!result) {
-        throw new Error("Borrowing not found");
+        throw new BorrowingNotFoundException();
       }
 
       return this.dbToEntityRemap(result);
@@ -64,7 +66,7 @@ class BorrowingRepositoryImpl implements IBorrowingRepository {
       });
 
       if (!result) {
-        throw new Error("Borrowing not found");
+        throw new BorrowingNotFoundException();
       }
 
       return result.map(this.dbToEntityRemap);

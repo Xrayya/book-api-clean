@@ -1,6 +1,7 @@
 import type User from "@domain/entities/User.entity";
 import UserRole from "@domain/enums/UserRole.enum";
 import type { IUserRepository } from "@domain/interfaces/repositories/IUser.repository";
+import { UserNotFoundException } from "@exceptions/User.exception";
 import { Prisma, PrismaClient } from "@prisma/client";
 
 class UserRepositoryImpl implements IUserRepository {
@@ -29,7 +30,7 @@ class UserRepositoryImpl implements IUserRepository {
       const result = await this.prisma.user.findUnique({ where: { id: arg } });
 
       if (!result) {
-        throw new Error("User not found");
+        throw new UserNotFoundException();
       }
 
       return this.dbToEntityRemap(result);
@@ -39,7 +40,7 @@ class UserRepositoryImpl implements IUserRepository {
       });
 
       if (!result) {
-        throw new Error("User not found");
+        throw new UserNotFoundException();
       }
 
       return this.dbToEntityRemap(result);
@@ -55,7 +56,7 @@ class UserRepositoryImpl implements IUserRepository {
     });
 
     if (!result) {
-      throw new Error("User not found");
+      throw new UserNotFoundException();
     }
 
     return result.password;
