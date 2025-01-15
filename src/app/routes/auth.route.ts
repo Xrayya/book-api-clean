@@ -1,7 +1,8 @@
 import { authService } from "@app/bootstrap";
 import { Hono } from "hono";
 import { validateJsonRequest } from "../middlewares/validation.middleware";
-import { loginSchema, registerSchema } from "../schemas/request";
+import { loginSchema } from "@app/schemas/request/auth/login.schema";
+import { registerSchema } from "@app/schemas/request/auth/register.schema";
 
 export const authRoute = new Hono()
   .basePath("/auth")
