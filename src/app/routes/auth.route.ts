@@ -5,7 +5,6 @@ import { loginSchema } from "@app/schemas/request/auth/login.schema";
 import { registerSchema } from "@app/schemas/request/auth/register.schema";
 
 export const authRoute = new Hono()
-  .basePath("/auth")
   .post("/login", ...validateJsonRequest(loginSchema), async (c) => {
     const { email, password } = c.req.valid("json");
     const { user, token } = await authService.login(email, password);

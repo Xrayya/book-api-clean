@@ -7,7 +7,6 @@ import { getBooksSchema } from "@app/schemas/request/books/books.schema";
 import { Hono } from "hono";
 
 export const booksRoute = new Hono()
-  .basePath("/books")
   .use(verifyAuth)
   .get("/", ...validateRequest(getBooksSchema), async (c) => {
     const {

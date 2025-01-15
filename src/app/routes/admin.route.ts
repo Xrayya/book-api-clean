@@ -6,7 +6,6 @@ import { suspensionSchema } from "@app/schemas/request/admin/suspension.schema";
 import { Hono } from "hono";
 
 export const adminRoute = new Hono()
-  .basePath("/admin")
   .use(verifyAuth)
   .use(verifyAdmin)
   .post("/suspend", ...validateJsonRequest(suspensionSchema), async (c) => {

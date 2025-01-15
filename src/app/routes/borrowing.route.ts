@@ -8,7 +8,6 @@ import { returnSchema } from "@app/schemas/request/borrowing/return.schema";
 import { Hono } from "hono";
 
 export const borrowingRoute = new Hono()
-  .basePath("/borrowing")
   .use(verifyAuth)
   .post("/", verifyClient, ...validateJsonRequest(borrowSchema), async (c) => {
     const { bookIds } = c.req.valid("json");
