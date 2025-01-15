@@ -12,19 +12,19 @@
     "allowJs": true,
     "paths": {
       "@domain/*": [
-        "src/domain/*"
+        "./src/domain/*"
       ],
       "@exceptions/*": [
-        "src/exceptions/*"
+        "./src/exceptions/*"
       ],
       "@infrastructure/*": [
-        "src/infrastructure/*"
+        "./src/infrastructure/*"
       ],
       "@app/*": [
-        "src/app/*"
+        "./src/app/*"
       ],
       "@/*": [
-        "src/*"
+        "./src/*"
       ]
     },
     // Bundler mode
