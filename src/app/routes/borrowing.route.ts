@@ -1,4 +1,5 @@
 import { borrowingService } from "@app/bootstrap";
+import { verifyAdmin } from "@app/middlewares/admin.middleware";
 import { verifyAuth } from "@app/middlewares/auth.middleware";
 import { verifyClient } from "@app/middlewares/client.middleware";
 import { validateJsonRequest } from "@app/middlewares/validation.middleware";
@@ -16,7 +17,7 @@ export const borrowingRoute = new Hono()
 
     return c.json({ borrowing }, 201);
   })
-  .post("/return", ...validateJsonRequest(returnSchema), async (c) => {
+  .post("/return", verifyAdmin, ...validateJsonRequest(returnSchema), async (c) => {
     const { bookId } = c.req.valid("json");
     const { id } = c.get("authUser");
     const borrowing = await borrowingService.confirmReturn(id, bookId);
