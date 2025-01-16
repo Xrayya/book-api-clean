@@ -82,7 +82,7 @@ src/                        # Main directory for application source code.
     docker run --name book-api-postgres -e POSTGRES_PASSWORD=secret -p 5432:5432 -d postgres
     ```
 
-    If you want to use a different database, you can adjust the database configuration in the `.env` file and also generator in [`/prisma/prisma.schema`](https://github.com/Xrayya/book-api-clean/blob/main/prisma/schema.prisma).
+    If you want to use a different database, you can adjust the database configuration in the `.env` file and datasource generator in [`/prisma/prisma.schema`](https://github.com/Xrayya/book-api-clean/blob/f0fcc2e8fa8d917d23c0861c0befa169bdbf6fe6/prisma/schema.prisma#L12).
 
 4. **Run the database migration**
 
