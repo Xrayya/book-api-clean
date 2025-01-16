@@ -7,7 +7,8 @@
   },
   "devDependencies": {
     "@types/bun": "latest",
-    "@types/jsonwebtoken": "^9.0.7"
+    "@types/jsonwebtoken": "^9.0.7",
+    "prettier": "^3.4.2"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
