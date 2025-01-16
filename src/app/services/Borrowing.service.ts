@@ -4,9 +4,7 @@ import BorrowBooksUseCaseImpl from "@domain/useCases/BorrowBooksImpl.useCase";
 import ConfirmReturnUseCaseImpl from "@domain/useCases/ConfirmReturnImpl.useCase";
 
 class BorrowingService {
-  constructor(
-    private borrowingRepository: IBorrowingRepository,
-  ) {
+  constructor(private borrowingRepository: IBorrowingRepository) {
     this.borrowBooksUseCase = new BorrowBooksUseCaseImpl(
       this.borrowingRepository,
     );

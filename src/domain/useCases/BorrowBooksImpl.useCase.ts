@@ -6,7 +6,10 @@ import type { IBorrowBooksUseCase } from "@domain/interfaces/useCases/IBorrowBoo
 
 class BorrowBooksUseCaseImpl implements IBorrowBooksUseCase {
   constructor(private borrowingRepository: IBorrowingRepository) {}
-  async execute(userId: User["id"], bookIds: Book["id"][]): Promise<Borrowing[]> {
+  async execute(
+    userId: User["id"],
+    bookIds: Book["id"][],
+  ): Promise<Borrowing[]> {
     return this.borrowingRepository.add(userId, bookIds);
   }
 }

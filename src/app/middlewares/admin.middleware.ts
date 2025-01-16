@@ -1,6 +1,9 @@
 import type User from "@domain/entities/User.entity";
 import UserRole from "@domain/enums/UserRole.enum";
-import { AuthenticationException, AuthorizationException } from "@exceptions/Auth.exception";
+import {
+  AuthenticationException,
+  AuthorizationException,
+} from "@exceptions/Auth.exception";
 import { createMiddleware } from "hono/factory";
 import type { JwtPayload } from "jsonwebtoken";
 

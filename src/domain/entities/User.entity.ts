@@ -12,7 +12,7 @@ class User implements IEntity {
     public isSuspended: boolean,
     public createdAt: Date,
     public updatedAt: Date,
-  ) { }
+  ) {}
 }
 
 export default User;

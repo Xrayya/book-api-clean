@@ -3,7 +3,7 @@ import type { IUserRepository } from "@domain/interfaces/repositories/IUser.repo
 import type { IUnsuspendUserUseCase } from "@domain/interfaces/useCases/IUnsuspendUser.useCase";
 
 class UnsuspendUserUseCaseImpl implements IUnsuspendUserUseCase {
-  constructor(private userRepository: IUserRepository) { }
+  constructor(private userRepository: IUserRepository) {}
 
   execute(userId: User["id"]): Promise<User> {
     return this.userRepository.update(userId, { isSuspended: false });

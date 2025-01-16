@@ -11,9 +11,9 @@ export const validateRequest = <
   THeader extends ZodRawShape = {},
   TParams extends ZodRawShape = {},
   TCookie extends ZodRawShape = {},
-  TForm extends ZodRawShape = {}
+  TForm extends ZodRawShape = {},
 >(
-  schema: BaseRequestSchema<TJson, TQuery, THeader, TParams, TCookie, TForm>
+  schema: BaseRequestSchema<TJson, TQuery, THeader, TParams, TCookie, TForm>,
 ) => {
   return handlersFactory.createHandlers(
     validator("header", (value, c) => {
@@ -31,7 +31,7 @@ export const validateRequest = <
               };
             }),
           },
-          400
+          400,
         );
       }
 
@@ -52,7 +52,7 @@ export const validateRequest = <
               };
             }),
           },
-          400
+          400,
         );
       }
 
@@ -73,7 +73,7 @@ export const validateRequest = <
               };
             }),
           },
-          400
+          400,
         );
       }
 
@@ -94,12 +94,12 @@ export const validateRequest = <
               };
             }),
           },
-          400
+          400,
         );
       }
 
       return result?.data;
-    })
+    }),
   );
 };
 
@@ -109,16 +109,15 @@ export const validateJsonRequest = <
   THeader extends ZodRawShape = {},
   TParams extends ZodRawShape = {},
   TCookie extends ZodRawShape = {},
-  TForm extends ZodRawShape = {}
+  TForm extends ZodRawShape = {},
 >(
-  schema: BaseRequestSchema<TJson, TQuery, THeader, TParams, TCookie, TForm>
+  schema: BaseRequestSchema<TJson, TQuery, THeader, TParams, TCookie, TForm>,
 ) => {
   const base = validateRequest(schema);
 
   return handlersFactory.createHandlers(
     ...base,
     validator("json", (value, c) => {
-
       const result = schema.json?.safeParse(value);
       if (!result?.success) {
         return c.json(
@@ -131,12 +130,12 @@ export const validateJsonRequest = <
               };
             }),
           },
-          400
+          400,
         );
       }
 
       return result?.data;
-    })
+    }),
   );
 };
 
@@ -146,9 +145,9 @@ export const validateFormRequest = <
   THeader extends ZodRawShape = {},
   TParams extends ZodRawShape = {},
   TCookie extends ZodRawShape = {},
-  TForm extends ZodRawShape = {}
+  TForm extends ZodRawShape = {},
 >(
-  schema: BaseRequestSchema<TJson, TQuery, THeader, TParams, TCookie, TForm>
+  schema: BaseRequestSchema<TJson, TQuery, THeader, TParams, TCookie, TForm>,
 ) => {
   const base = validateRequest(schema);
 
@@ -169,11 +168,11 @@ export const validateFormRequest = <
               };
             }),
           },
-          400
+          400,
         );
       }
 
       return result?.data;
-    })
+    }),
   );
 };

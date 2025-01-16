@@ -59,50 +59,50 @@ src/                        # Main directory for application source code.
 
 1. **Clone this repository**
 
-    ```bash
-    git clone https://github.com/Xrayya/book-api-clean
-    cd book-api-clean
-    ```
+   ```bash
+   git clone https://github.com/Xrayya/book-api-clean
+   cd book-api-clean
+   ```
 
 2. **Install dependencies**
 
-    ```bash
-    bun install
-    ```
+   ```bash
+   bun install
+   ```
 
-    This project built using [Bun](https://bun.sh) as a toolkit. If you use npm or yarn, you can run `npm install` or `yarn install` instead. You might also want to adjust some packages and scripts in the `package.json` file.
+   This project built using [Bun](https://bun.sh) as a toolkit. If you use npm or yarn, you can run `npm install` or `yarn install` instead. You might also want to adjust some packages and scripts in the `package.json` file.
 
 3. **Set up the environment variables**
 
-    Copy the `.env.example` file to `.env` and adjust the values according to your local environment.
+   Copy the `.env.example` file to `.env` and adjust the values according to your local environment.
 
-    And since this project uses PostgreSQL, make sure you have a PostgreSQL database running. You can use Docker to run a PostgreSQL container:
+   And since this project uses PostgreSQL, make sure you have a PostgreSQL database running. You can use Docker to run a PostgreSQL container:
 
-    ```bash
-    docker run --name book-api-postgres -e POSTGRES_PASSWORD=secret -p 5432:5432 -d postgres
-    ```
+   ```bash
+   docker run --name book-api-postgres -e POSTGRES_PASSWORD=secret -p 5432:5432 -d postgres
+   ```
 
-    If you want to use a different database, you can adjust the database configuration in the `.env` file and datasource generator in [`/prisma/prisma.schema`](https://github.com/Xrayya/book-api-clean/blob/f0fcc2e8fa8d917d23c0861c0befa169bdbf6fe6/prisma/schema.prisma#L12).
+   If you want to use a different database, you can adjust the database configuration in the `.env` file and datasource generator in [`/prisma/prisma.schema`](https://github.com/Xrayya/book-api-clean/blob/f0fcc2e8fa8d917d23c0861c0befa169bdbf6fe6/prisma/schema.prisma#L12).
 
 4. **Run the database migration**
 
-    This project uses Prisma as an ORM for database interaction. You can run the migration to create the database schema:
+   This project uses Prisma as an ORM for database interaction. You can run the migration to create the database schema:
 
-    ```bash
-    bunx prisma migrate dev
-    ```
+   ```bash
+   bunx prisma migrate dev
+   ```
 
-    This command will create the database schema based on the Prisma schema file in the `prisma` directory.
+   This command will create the database schema based on the Prisma schema file in the `prisma` directory.
 
 5. **Run the application**
 
-    You can start the application by running:
+   You can start the application by running:
 
-    ```bash
-    bun dev
-    ```
+   ```bash
+   bun dev
+   ```
 
-    This command will start the application in development mode. You can access the API at `http://localhost:3000/api`.
+   This command will start the application in development mode. You can access the API at `http://localhost:3000/api`.
 
 ## Future Improvements
 

@@ -16,12 +16,15 @@ class SearchBooksUseCaseImpl implements ISearchBooksUseCase {
       };
     },
   ): Promise<Book[]> {
-    return this.bookRepository.get({
-      title: query,
-      ISBN: query,
-      author: query,
-      publisher: query,
-    }, filter);
+    return this.bookRepository.get(
+      {
+        title: query,
+        ISBN: query,
+        author: query,
+        publisher: query,
+      },
+      filter,
+    );
   }
 }
 

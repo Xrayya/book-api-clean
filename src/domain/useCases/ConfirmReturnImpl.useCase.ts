@@ -5,7 +5,7 @@ import type { IBorrowingRepository } from "@domain/interfaces/repositories/IBorr
 import type { IConfirmReturnUseCase } from "@domain/interfaces/useCases/IConfirmReturn.useCase";
 
 class ConfirmReturnUseCaseImpl implements IConfirmReturnUseCase {
-  constructor(private borrowingRepository: IBorrowingRepository) { }
+  constructor(private borrowingRepository: IBorrowingRepository) {}
 
   async execute(userId: User["id"], bookId: Book["id"]): Promise<Borrowing> {
     const borrowing = (

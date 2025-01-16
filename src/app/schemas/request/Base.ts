@@ -6,7 +6,7 @@ export class BaseRequestSchema<
   THeader extends ZodRawShape = ZodRawShape,
   TParams extends ZodRawShape = ZodRawShape,
   TCookie extends ZodRawShape = ZodRawShape,
-  TForm extends ZodRawShape = ZodRawShape
+  TForm extends ZodRawShape = ZodRawShape,
 > {
   json: ZodObject<
     TJson,

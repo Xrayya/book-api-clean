@@ -2,7 +2,10 @@ import {
   AuthenticationException,
   AuthorizationException,
 } from "@exceptions/Auth.exception";
-import { BookNotAvailableException, BookNotFoundException } from "@exceptions/Book.exception";
+import {
+  BookNotAvailableException,
+  BookNotFoundException,
+} from "@exceptions/Book.exception";
 import { BorrowingNotFoundException } from "@exceptions/Borrowing.exception";
 import { UserNotFoundException } from "@exceptions/User.exception";
 import { Hono } from "hono";

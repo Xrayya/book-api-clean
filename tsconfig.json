@@ -1,31 +1,18 @@
 {
   "compilerOptions": {
     // Enable latest features
-    "lib": [
-      "ESNext",
-      "DOM"
-    ],
+    "lib": ["ESNext", "DOM"],
     "target": "ESNext",
     "module": "ESNext",
     "moduleDetection": "force",
     "jsx": "react-jsx",
     "allowJs": true,
     "paths": {
-      "@domain/*": [
-        "./src/domain/*"
-      ],
-      "@exceptions/*": [
-        "./src/exceptions/*"
-      ],
-      "@infrastructure/*": [
-        "./src/infrastructure/*"
-      ],
-      "@app/*": [
-        "./src/app/*"
-      ],
-      "@/*": [
-        "./src/*"
-      ]
+      "@domain/*": ["./src/domain/*"],
+      "@exceptions/*": ["./src/exceptions/*"],
+      "@infrastructure/*": ["./src/infrastructure/*"],
+      "@app/*": ["./src/app/*"],
+      "@/*": ["./src/*"]
     },
     // Bundler mode
     "moduleResolution": "bundler",
