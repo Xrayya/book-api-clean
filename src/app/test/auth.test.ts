@@ -1,18 +1,30 @@
 import backendApp from "@app/app";
 import JWTTokenizer from "@infrastructure/tokenizer/jwt.tokenizer";
 import { PrismaClient } from "@prisma/client";
-import { describe, expect, test } from "bun:test";
+import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 
 const prisma = new PrismaClient();
 
+let validToken: string;
+
 describe("Auth routes", () => {
-  test("should return user info correctly when register with correct credentials", async () => {
+  beforeAll(async () => {
     try {
       await prisma.user.delete({
         where: { email: "uniquetestemailuser209384091903810923@example.com" },
       });
-    } catch (error) {}
+    } catch (error) { }
+  });
 
+  afterAll(async () => {
+    try {
+      await prisma.user.delete({
+        where: { email: "uniquetestemailuser209384091903810923@example.com" },
+      });
+    } catch (error) { }
+  });
+
+  test("should return user info correctly when register with correct credentials", async () => {
     const res = await backendApp.request("/api/auth/register", {
       method: "POST",
       headers: {
@@ -91,10 +103,20 @@ describe("Auth routes", () => {
 
     expect(userLoggedIn.token).toBe(expectedToken);
 
-    try {
-      await prisma.user.delete({
-        where: { email: "uniquetestemailuser209384091903810923@example.com" },
-      });
-    } catch (error) {}
+    validToken = userLoggedIn.token;
+  });
+
+  test("should return true when logout with correct token", async () => {
+    const res = await backendApp.request("/api/auth/logout", {
+      headers: {
+        Authorization: `Bearer ${validToken}`,
+      },
+    });
+
+    const loggedOutInfo = await res.json();
+
+    expect(res.status).toBe(200);
+    expect(loggedOutInfo).toHaveProperty("isLoggedOut");
+    expect(loggedOutInfo.isLoggedOut).toBe(true);
   });
 });
