@@ -20,13 +20,17 @@ export const verifyAuth = createMiddleware<{
     throw new AuthenticationException("Please login first");
   }
 
-  const user = tokenizer.decode(token) as JwtPayload & {
-    id: User["id"];
-    name: User["name"];
-    email: User["email"];
-    role: User["role"];
-  };
+  try {
+    const user = tokenizer.decode(token) as JwtPayload & {
+      id: User["id"];
+      name: User["name"];
+      email: User["email"];
+      role: User["role"];
+    };
 
-  c.set("authUser", user);
+    c.set("authUser", user);
+  } catch (error) {
+    throw new AuthenticationException("Invalid token");
+  }
   await next();
 });
