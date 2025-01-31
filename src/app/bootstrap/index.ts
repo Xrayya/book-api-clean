@@ -17,6 +17,5 @@ export const authService = new AuthService(userRepository, tokenizer);
 export const bookService = new BookService(bookRepository);
 export const borrowingService = new BorrowingService(
   borrowingRepository,
-  tokenizer,
 );
 export const adminService = new AdminService(userRepository);
