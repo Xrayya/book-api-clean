@@ -1,7 +1,12 @@
 import { bookCategoryCodeMapper } from "@/utils";
 import { bookService } from "@app/bootstrap";
+import { verifyAdmin } from "@app/middlewares/admin.middleware";
 import { verifyAuth } from "@app/middlewares/auth.middleware";
-import { validateRequest } from "@app/middlewares/validation.middleware";
+import {
+  validateJsonRequest,
+  validateRequest,
+} from "@app/middlewares/validation.middleware";
+import { addBookSchema } from "@app/schemas/request/admin/addBook.schema";
 import { bookDetailsSchema } from "@app/schemas/request/books/bookDetails.schema";
 import { getBooksSchema } from "@app/schemas/request/books/books.schema";
 import { Hono } from "hono";
@@ -50,4 +55,31 @@ export const booksRoute = new Hono()
     const book = await bookService.get(id);
 
     return c.json({ book }, 200);
-  });
+  })
+  .post(
+    "/",
+    verifyAdmin,
+    ...validateJsonRequest(addBookSchema),
+    async (c) => {
+      const {
+        title,
+        author,
+        category,
+        publishedYear,
+        ISBN,
+        edition,
+        publisher,
+      } = c.req.valid("json");
+      const book = await bookService.add(
+        title,
+        author,
+        ISBN,
+        publisher,
+        publishedYear,
+        category,
+        edition,
+      );
+
+      return c.json({ book }, 201);
+    },
+  );
