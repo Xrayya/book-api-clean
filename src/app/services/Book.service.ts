@@ -1,3 +1,4 @@
+import { bookCategoryCodeMapper } from "@/utils";
 import type Book from "@domain/entities/Book.entity";
 import type { IBookRepository } from "@domain/interfaces/repositories/IBook.repository";
 import AddBookUseCaseImpl from "@domain/useCases/AddBookImpl.useCase";
@@ -41,21 +42,21 @@ class BookService {
   }
 
   async add(
-    title: Book["title"],
-    author: Book["author"],
-    ISBN: Book["ISBN"],
-    publisher: Book["publisher"],
-    publishedYear: Book["publishedYear"],
-    category: Book["category"],
-    edition: Book["edition"],
-  ) {
+    title: string,
+    author: string,
+    ISBN: string,
+    publisher: string,
+    publishedYear: number,
+    category: string,
+    edition: number,
+  ) : Promise<Book> {
     return this.addBookUseCase.execute(
       title,
       author,
       ISBN,
       publisher,
       publishedYear,
-      category,
+      bookCategoryCodeMapper(category),
       edition,
     );
   }
