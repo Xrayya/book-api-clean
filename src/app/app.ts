@@ -11,10 +11,10 @@ import { UserNotFoundException } from "@exceptions/User.exception";
 import { Hono } from "hono";
 import { HTTPException } from "hono/http-exception";
 import { logger } from "hono/logger";
-import { adminRoute } from "./routes/admin.route";
 import { authRoute } from "./routes/auth.route";
 import { booksRoute } from "./routes/books.route";
 import { borrowingRoute } from "./routes/borrowing.route";
+import { userRoute } from "./routes/user.route";
 
 const backendApp = new Hono().basePath("/api");
 
@@ -23,7 +23,7 @@ backendApp.use(logger());
 backendApp.route("/auth", authRoute);
 backendApp.route("/books", booksRoute);
 backendApp.route("/borrowing", borrowingRoute);
-backendApp.route("/admin", adminRoute);
+backendApp.route("/user", userRoute);
 
 backendApp.onError((err, c) => {
   if (err instanceof HTTPException) {
