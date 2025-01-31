@@ -1,7 +1,7 @@
-import AdminService from "@app/services/Admin.service";
 import AuthService from "@app/services/Auth.service";
 import BookService from "@app/services/Book.service";
 import BorrowingService from "@app/services/Borrowing.service";
+import UserService from "@app/services/User.service";
 import BookRepositoryImpl from "@infrastructure/data/repositories/BookImpl.repository";
 import BorrowingRepositoryImpl from "@infrastructure/data/repositories/BorrowingImpl.repository";
 import UserRepositoryImpl from "@infrastructure/data/repositories/UserImpl.repository";
@@ -18,4 +18,4 @@ export const bookService = new BookService(bookRepository);
 export const borrowingService = new BorrowingService(
   borrowingRepository,
 );
-export const adminService = new AdminService(userRepository);
+export const userService = new UserService(userRepository);

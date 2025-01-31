@@ -3,7 +3,7 @@ import type { IUserRepository } from "@domain/interfaces/repositories/IUser.repo
 import SuspendUserUseCaseImpl from "@domain/useCases/SuspendUserImpl.useCase";
 import UnsuspendUserUseCaseImpl from "@domain/useCases/UnsuspendUserImpl.useCase";
 
-class AdminService {
+class UserService {
   constructor(private userRepository: IUserRepository) {
     this.suspendUserUseCase = new SuspendUserUseCaseImpl(this.userRepository);
     this.unsuspendUserUseCase = new UnsuspendUserUseCaseImpl(
@@ -23,4 +23,4 @@ class AdminService {
   }
 }
 
-export default AdminService;
+export default UserService;
