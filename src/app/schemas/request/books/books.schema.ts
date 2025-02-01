@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { BaseRequestSchema } from "../Base";
-import BookCategory from "@domain/enums/BookCategory.enum";
+import { BookCategory } from "@domain/enums";
 
 export const getBooksSchema = new BaseRequestSchema({
   jsonSchema: z.object({}),
