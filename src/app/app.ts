@@ -28,17 +28,29 @@ backendApp.onError((err, c) => {
       { error: { name: err.name, message: err.message } },
       err.status,
     );
-  } else if (err instanceof AuthenticationException) {
+  }
+
+  if (err instanceof AuthenticationException) {
     return c.json({ error: { name: err.name, message: err.message } }, 401);
-  } else if (err instanceof AuthorizationException) {
+  }
+
+  if (err instanceof AuthorizationException) {
     return c.json({ error: { name: err.name, message: err.message } }, 403);
-  } else if (err instanceof BookNotFoundException) {
+  }
+
+  if (err instanceof BookNotFoundException) {
     return c.json({ error: { name: err.name, message: err.message } }, 404);
-  } else if (err instanceof BookNotAvailableException) {
+  }
+
+  if (err instanceof BookNotAvailableException) {
     return c.json({ error: { name: err.name, message: err.message } }, 400);
-  } else if (err instanceof BorrowingNotFoundException) {
+  }
+
+  if (err instanceof BorrowingNotFoundException) {
     return c.json({ error: { name: err.name, message: err.message } }, 404);
-  } else if (err instanceof UserNotFoundException) {
+  }
+
+  if (err instanceof UserNotFoundException) {
     return c.json({ error: { name: err.name, message: err.message } }, 404);
   }
 
