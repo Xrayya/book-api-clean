@@ -1,11 +1,15 @@
-import AuthService from "@app/services/Auth.service";
-import BookService from "@app/services/Book.service";
-import BorrowingService from "@app/services/Borrowing.service";
-import UserService from "@app/services/User.service";
-import BookRepositoryImpl from "@infrastructure/data/repositories/BookImpl.repository";
-import BorrowingRepositoryImpl from "@infrastructure/data/repositories/BorrowingImpl.repository";
-import UserRepositoryImpl from "@infrastructure/data/repositories/UserImpl.repository";
-import JWTTokenizer from "@infrastructure/tokenizer/jwt.tokenizer";
+import {
+  AuthService,
+  BookService,
+  BorrowingService,
+  UserService,
+} from "@app/services";
+import {
+  BookRepositoryImpl,
+  BorrowingRepositoryImpl,
+  UserRepositoryImpl,
+} from "@infrastructure/data/repositories";
+import { JWTTokenizer } from "@infrastructure/tokenizer/jwt.tokenizer";
 
 const userRepository = new UserRepositoryImpl();
 const bookRepository = new BookRepositoryImpl();
@@ -15,7 +19,5 @@ export const tokenizer = new JWTTokenizer();
 
 export const authService = new AuthService(userRepository, tokenizer);
 export const bookService = new BookService(bookRepository);
-export const borrowingService = new BorrowingService(
-  borrowingRepository,
-);
+export const borrowingService = new BorrowingService(borrowingRepository);
 export const userService = new UserService(userRepository);

@@ -1,10 +1,10 @@
-import type User from "@domain/entities/User.entity";
-import UserRole from "@domain/enums/UserRole.enum";
-import type { IUserRepository } from "@domain/interfaces/repositories/IUser.repository";
+import type { User } from "@domain/entities";
+import { UserRole } from "@domain/enums";
+import type { IUserRepository } from "@domain/interfaces/repositories";
 import { UserNotFoundException } from "@exceptions/User.exception";
 import { Prisma, PrismaClient } from "@prisma/client";
 
-class UserRepositoryImpl implements IUserRepository {
+export class UserRepositoryImpl implements IUserRepository {
   constructor() {
     this.prisma = new PrismaClient();
   }
@@ -91,5 +91,3 @@ class UserRepositoryImpl implements IUserRepository {
     return result.map(this.dbToEntityRemap);
   }
 }
-
-export default UserRepositoryImpl;

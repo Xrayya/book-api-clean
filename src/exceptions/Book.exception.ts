@@ -1,4 +1,4 @@
-import type Book from "@domain/entities/Book.entity";
+import type { Book } from "@domain/entities";
 
 export class BookNotFoundException extends Error {
   constructor(identifier: string) {

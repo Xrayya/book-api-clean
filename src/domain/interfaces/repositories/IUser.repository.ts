@@ -1,4 +1,4 @@
-import type User from "@domain/entities/User.entity";
+import type { User } from "@domain/entities";
 import type { IRepository } from "./IRepository.type";
 
 export interface IUserRepository extends IRepository<User> {

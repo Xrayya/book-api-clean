@@ -1,10 +1,10 @@
-import type User from "@domain/entities/User.entity";
-import type { IUserRepository } from "@domain/interfaces/repositories/IUser.repository";
-import type { ILoginUseCase } from "@domain/interfaces/useCases/ILogin.useCase";
+import type { User } from "@domain/entities";
+import type { IUserRepository } from "@domain/interfaces/repositories";
+import type { ILoginUseCase } from "@domain/interfaces/useCases";
 import { AuthenticationException } from "@exceptions/Auth.exception";
 import type { ITokenizer } from "@infrastructure/tokenizer/ITokenizer.type";
 
-class LoginUseCaseImpl implements ILoginUseCase {
+export class LoginUseCaseImpl implements ILoginUseCase {
   constructor(
     private userRepository: IUserRepository,
     private tokenizer: ITokenizer,
@@ -32,5 +32,3 @@ class LoginUseCaseImpl implements ILoginUseCase {
     });
   }
 }
-
-export default LoginUseCaseImpl;

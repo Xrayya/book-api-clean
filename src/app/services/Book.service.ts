@@ -1,12 +1,14 @@
 import { bookCategoryCodeMapper } from "@/utils";
-import type Book from "@domain/entities/Book.entity";
-import type { IBookRepository } from "@domain/interfaces/repositories/IBook.repository";
-import AddBookUseCaseImpl from "@domain/useCases/AddBookImpl.useCase";
-import GetBookUseCaseImpl from "@domain/useCases/GetBookImpl.useCase";
-import GetBookListUseCaseImpl from "@domain/useCases/GetBookListImpl.useCase";
-import SearchBooksUseCaseImpl from "@domain/useCases/SearchBooksImpl.useCase";
+import type { Book } from "@domain/entities";
+import type { IBookRepository } from "@domain/interfaces/repositories";
+import {
+  AddBookUseCaseImpl,
+  GetBookListUseCaseImpl,
+  GetBookUseCaseImpl,
+  SearchBooksUseCaseImpl,
+} from "@domain/useCases";
 
-class BookService {
+export class BookService {
   constructor(private bookRepository: IBookRepository) {
     this.getBookListUseCase = new GetBookListUseCaseImpl(this.bookRepository);
     this.searchBooksUseCase = new SearchBooksUseCaseImpl(this.bookRepository);
@@ -49,7 +51,7 @@ class BookService {
     publishedYear: number,
     category: string,
     edition: number,
-  ) : Promise<Book> {
+  ): Promise<Book> {
     return this.addBookUseCase.execute(
       title,
       author,
@@ -61,5 +63,3 @@ class BookService {
     );
   }
 }
-
-export default BookService;

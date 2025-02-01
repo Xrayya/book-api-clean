@@ -1,8 +1,6 @@
 import { userService } from "@app/bootstrap";
-import { verifyAdmin } from "@app/middlewares/admin.middleware";
-import { verifyAuth } from "@app/middlewares/auth.middleware";
-import { validateJsonRequest } from "@app/middlewares/validation.middleware";
-import { suspensionSchema } from "@app/schemas/request/admin/suspension.schema";
+import { validateJsonRequest, verifyAdmin, verifyAuth } from "@app/middlewares";
+import { suspensionSchema } from "@app/schemas/request/user";
 import { Hono } from "hono";
 
 export const userRoute = new Hono()

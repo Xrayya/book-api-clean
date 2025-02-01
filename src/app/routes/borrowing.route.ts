@@ -1,10 +1,11 @@
 import { borrowingService } from "@app/bootstrap";
-import { verifyAdmin } from "@app/middlewares/admin.middleware";
-import { verifyAuth } from "@app/middlewares/auth.middleware";
-import { verifyClient } from "@app/middlewares/client.middleware";
-import { validateJsonRequest } from "@app/middlewares/validation.middleware";
-import { borrowSchema } from "@app/schemas/request/borrowing/borrow.schema";
-import { returnSchema } from "@app/schemas/request/borrowing/return.schema";
+import {
+  validateJsonRequest,
+  verifyAdmin,
+  verifyAuth,
+  verifyClient,
+} from "@app/middlewares";
+import { borrowSchema, returnSchema } from "@app/schemas/request/borrowing";
 import { Hono } from "hono";
 
 export const borrowingRoute = new Hono()

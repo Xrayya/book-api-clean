@@ -1,11 +1,11 @@
 import { bookCategoryCodeMapper } from "@/utils";
-import type Borrowing from "@domain/entities/Borrowing.entity";
-import UserRole from "@domain/enums/UserRole.enum";
-import type { IBorrowingRepository } from "@domain/interfaces/repositories/IBorrowing.repository";
+import type { Borrowing } from "@domain/entities";
+import { UserRole } from "@domain/enums";
+import type { IBorrowingRepository } from "@domain/interfaces/repositories";
 import { BorrowingNotFoundException } from "@exceptions/Borrowing.exception";
 import { Prisma, PrismaClient } from "@prisma/client";
 
-class BorrowingRepositoryImpl implements IBorrowingRepository {
+export class BorrowingRepositoryImpl implements IBorrowingRepository {
   constructor() {
     this.prisma = new PrismaClient();
   }
@@ -153,5 +153,3 @@ class BorrowingRepositoryImpl implements IBorrowingRepository {
     return result.map(this.dbToEntityRemap);
   }
 }
-
-export default BorrowingRepositoryImpl;

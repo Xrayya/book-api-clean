@@ -1,10 +1,10 @@
 import { bookCategoryCodeMapper } from "@/utils";
-import type Book from "@domain/entities/Book.entity";
-import type { IBookRepository } from "@domain/interfaces/repositories/IBook.repository";
+import type { Book } from "@domain/entities";
+import type { IBookRepository } from "@domain/interfaces/repositories";
 import { BookNotFoundException } from "@exceptions/Book.exception";
 import { Prisma, PrismaClient } from "@prisma/client";
 
-class BookRepositoryImpl implements IBookRepository {
+export class BookRepositoryImpl implements IBookRepository {
   constructor() {
     this.prisma = new PrismaClient();
   }
@@ -121,5 +121,3 @@ class BookRepositoryImpl implements IBookRepository {
     return result.map(this.dbToEntityRemap);
   }
 }
-
-export default BookRepositoryImpl;

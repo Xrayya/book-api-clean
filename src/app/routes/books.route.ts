@@ -1,14 +1,16 @@
 import { bookCategoryCodeMapper } from "@/utils";
 import { bookService } from "@app/bootstrap";
-import { verifyAdmin } from "@app/middlewares/admin.middleware";
-import { verifyAuth } from "@app/middlewares/auth.middleware";
 import {
   validateJsonRequest,
   validateRequest,
-} from "@app/middlewares/validation.middleware";
-import { addBookSchema } from "@app/schemas/request/admin/addBook.schema";
-import { bookDetailsSchema } from "@app/schemas/request/books/bookDetails.schema";
-import { getBooksSchema } from "@app/schemas/request/books/books.schema";
+  verifyAdmin,
+  verifyAuth,
+} from "@app/middlewares";
+import {
+  addBookSchema,
+  bookDetailsSchema,
+  getBooksSchema,
+} from "@app/schemas/request/books";
 import { Hono } from "hono";
 
 export const booksRoute = new Hono()
@@ -56,30 +58,18 @@ export const booksRoute = new Hono()
 
     return c.json({ book }, 200);
   })
-  .post(
-    "/",
-    verifyAdmin,
-    ...validateJsonRequest(addBookSchema),
-    async (c) => {
-      const {
-        title,
-        author,
-        category,
-        publishedYear,
-        ISBN,
-        edition,
-        publisher,
-      } = c.req.valid("json");
-      const book = await bookService.add(
-        title,
-        author,
-        ISBN,
-        publisher,
-        publishedYear,
-        category,
-        edition,
-      );
+  .post("/", verifyAdmin, ...validateJsonRequest(addBookSchema), async (c) => {
+    const { title, author, category, publishedYear, ISBN, edition, publisher } =
+      c.req.valid("json");
+    const book = await bookService.add(
+      title,
+      author,
+      ISBN,
+      publisher,
+      publishedYear,
+      category,
+      edition,
+    );
 
-      return c.json({ book }, 201);
-    },
-  );
+    return c.json({ book }, 201);
+  });

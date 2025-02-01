@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import type { ITokenizer } from "./ITokenizer.type";
 
-class JWTTokenizer implements ITokenizer {
+export class JWTTokenizer implements ITokenizer {
   encode(data: string | Buffer | object): string {
     return jwt.sign(data, process.env.JWT_SECRET!);
   }
@@ -10,5 +10,3 @@ class JWTTokenizer implements ITokenizer {
     return jwt.verify(token, process.env.JWT_SECRET!);
   }
 }
-
-export default JWTTokenizer;

@@ -1,4 +1,4 @@
-enum BookCategory {
+export enum BookCategory {
   GENERAL_WORK = "000",
   PHILOSOPHY_AND_PSYCHOLOGY = "100",
   RELIGION = "200",
@@ -10,5 +10,3 @@ enum BookCategory {
   LITERATURE = "800",
   HISTORY_AND_GEOGRAPHY = "900",
 }
-
-export default BookCategory;

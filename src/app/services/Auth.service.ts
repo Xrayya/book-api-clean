@@ -1,11 +1,13 @@
-import type User from "@domain/entities/User.entity";
-import type { IUserRepository } from "@domain/interfaces/repositories/IUser.repository";
+import type { User } from "@domain/entities";
+import type { IUserRepository } from "@domain/interfaces/repositories";
 import type { ITokenizer } from "@infrastructure/tokenizer/ITokenizer.type";
-import LoginUseCaseImpl from "@infrastructure/useCases/LoginImpl.useCase";
-import LogoutUseCaseImpl from "@infrastructure/useCases/LogoutImpl.useCase";
-import RegisterUseCaseImpl from "@infrastructure/useCases/RegisterImpl.useCase";
+import {
+  LoginUseCaseImpl,
+  LogoutUseCaseImpl,
+  RegisterUseCaseImpl,
+} from "@infrastructure/useCases";
 
-class AuthService {
+export class AuthService {
   constructor(
     private userRepository: IUserRepository,
     private tokenizer: ITokenizer,
@@ -64,5 +66,3 @@ class AuthService {
     return this.logoutUseCase.execute(token);
   }
 }
-
-export default AuthService;

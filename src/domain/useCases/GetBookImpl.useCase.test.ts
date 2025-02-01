@@ -1,8 +1,8 @@
-import type Book from "@domain/entities/Book.entity";
-import BookCategory from "@domain/enums/BookCategory.enum";
-import type { IBookRepository } from "@domain/interfaces/repositories/IBook.repository";
-import { describe, expect,  mock, test } from "bun:test";
-import GetBookUseCaseImpl from "./GetBookImpl.useCase";
+import type { Book } from "@domain/entities";
+import { BookCategory } from "@domain/enums";
+import type { IBookRepository } from "@domain/interfaces/repositories";
+import { describe, expect, mock, test } from "bun:test";
+import { GetBookUseCaseImpl } from "./GetBookImpl.useCase";
 
 describe("GetBookUseCaseImpl", () => {
   test("should return a book when the repository successfully fetches it", async () => {

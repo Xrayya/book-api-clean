@@ -1,9 +1,11 @@
-import type User from "@domain/entities/User.entity";
-import type { IUserRepository } from "@domain/interfaces/repositories/IUser.repository";
-import SuspendUserUseCaseImpl from "@domain/useCases/SuspendUserImpl.useCase";
-import UnsuspendUserUseCaseImpl from "@domain/useCases/UnsuspendUserImpl.useCase";
+import type { User } from "@domain/entities";
+import type { IUserRepository } from "@domain/interfaces/repositories";
+import {
+  SuspendUserUseCaseImpl,
+  UnsuspendUserUseCaseImpl,
+} from "@domain/useCases";
 
-class UserService {
+export class UserService {
   constructor(private userRepository: IUserRepository) {
     this.suspendUserUseCase = new SuspendUserUseCaseImpl(this.userRepository);
     this.unsuspendUserUseCase = new UnsuspendUserUseCaseImpl(
@@ -22,5 +24,3 @@ class UserService {
     return this.unsuspendUserUseCase.execute(id);
   }
 }
-
-export default UserService;

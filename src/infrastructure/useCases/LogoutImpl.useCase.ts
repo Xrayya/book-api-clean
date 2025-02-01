@@ -1,9 +1,9 @@
-import type User from "@domain/entities/User.entity";
-import type { IUserRepository } from "@domain/interfaces/repositories/IUser.repository";
-import type { ILogoutUseCase } from "@domain/interfaces/useCases/ILogout.useCase";
+import type { User } from "@domain/entities";
+import type { IUserRepository } from "@domain/interfaces/repositories";
+import type { ILogoutUseCase } from "@domain/interfaces/useCases";
 import type { ITokenizer } from "@infrastructure/tokenizer/ITokenizer.type";
 
-class LogoutUseCaseImpl implements ILogoutUseCase {
+export class LogoutUseCaseImpl implements ILogoutUseCase {
   constructor(
     private userRepository: IUserRepository,
     private tokenizer: ITokenizer,
@@ -24,5 +24,3 @@ class LogoutUseCaseImpl implements ILogoutUseCase {
     return true;
   }
 }
-
-export default LogoutUseCaseImpl;

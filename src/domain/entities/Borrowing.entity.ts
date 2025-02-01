@@ -1,8 +1,8 @@
 import type { IEntity } from "../interfaces/IEntity.type";
-import type Book from "./Book.entity";
-import type User from "./User.entity";
+import type { Book } from "./Book.entity";
+import type { User } from "./User.entity";
 
-class Borrowing implements IEntity {
+export class Borrowing implements IEntity {
   constructor(
     public id: number,
     public user: User,
@@ -13,5 +13,3 @@ class Borrowing implements IEntity {
     public updatedAt: Date,
   ) {}
 }
-
-export default Borrowing;

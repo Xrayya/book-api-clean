@@ -1,7 +1,7 @@
-import type UserRole from "../enums/UserRole.enum";
+import type { UserRole } from "@domain/enums";
 import type { IEntity } from "../interfaces/IEntity.type";
 
-class User implements IEntity {
+export class User implements IEntity {
   constructor(
     public id: number,
     public name: string,
@@ -14,5 +14,3 @@ class User implements IEntity {
     public updatedAt: Date,
   ) {}
 }
-
-export default User;

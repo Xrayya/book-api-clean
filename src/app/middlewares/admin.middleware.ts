@@ -1,5 +1,5 @@
-import type User from "@domain/entities/User.entity";
-import UserRole from "@domain/enums/UserRole.enum";
+import type { User } from "@domain/entities";
+import { UserRole } from "@domain/enums";
 import {
   AuthenticationException,
   AuthorizationException,

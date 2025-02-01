@@ -1,9 +1,9 @@
-import type User from "@domain/entities/User.entity";
-import UserRole from "@domain/enums/UserRole.enum";
-import type { IUserRepository } from "@domain/interfaces/repositories/IUser.repository";
-import type { IRegisterUseCase } from "@domain/interfaces/useCases/IRegister.useCase";
+import type { User } from "@domain/entities";
+import { UserRole } from "@domain/enums";
+import type { IUserRepository } from "@domain/interfaces/repositories";
+import type { IRegisterUseCase } from "@domain/interfaces/useCases";
 
-class RegisterUseCaseImpl implements IRegisterUseCase {
+export class RegisterUseCaseImpl implements IRegisterUseCase {
   constructor(private userRepository: IUserRepository) {}
 
   async execute(
@@ -16,9 +16,8 @@ class RegisterUseCaseImpl implements IRegisterUseCase {
       name,
       password,
       role: UserRole.CLIENT,
+      isSuspended: false,
       token: null,
     });
   }
 }
-
-export default RegisterUseCaseImpl;

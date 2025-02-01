@@ -1,7 +1,7 @@
-import type BookCategory from "../enums/BookCategory.enum";
+import type { BookCategory } from "@domain/enums";
 import type { IEntity } from "../interfaces/IEntity.type";
 
-class Book implements IEntity {
+export class Book implements IEntity {
   constructor(
     public readonly id: number,
     public readonly title: string,
@@ -16,5 +16,3 @@ class Book implements IEntity {
     public readonly updatedAt: Date,
   ) {}
 }
-
-export default Book;

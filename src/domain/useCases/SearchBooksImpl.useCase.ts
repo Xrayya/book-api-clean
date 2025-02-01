@@ -1,8 +1,8 @@
-import type Book from "@domain/entities/Book.entity";
-import type { IBookRepository } from "@domain/interfaces/repositories/IBook.repository";
-import type { ISearchBooksUseCase } from "@domain/interfaces/useCases/ISearchBooks.useCase";
+import type { Book } from "@domain/entities";
+import type { IBookRepository } from "@domain/interfaces/repositories";
+import type { ISearchBooksUseCase } from "@domain/interfaces/useCases";
 
-class SearchBooksUseCaseImpl implements ISearchBooksUseCase {
+export class SearchBooksUseCaseImpl implements ISearchBooksUseCase {
   constructor(private bookRepository: IBookRepository) {}
 
   execute(
@@ -27,5 +27,3 @@ class SearchBooksUseCaseImpl implements ISearchBooksUseCase {
     );
   }
 }
-
-export default SearchBooksUseCaseImpl;

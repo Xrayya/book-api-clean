@@ -1,4 +1,4 @@
-import type Book from "@domain/entities/Book.entity";
+import type { Book } from "@domain/entities";
 import type { IRepository } from "./IRepository.type";
 
 export interface IBookRepository extends IRepository<Book> {

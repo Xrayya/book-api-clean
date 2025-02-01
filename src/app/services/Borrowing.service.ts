@@ -1,9 +1,11 @@
-import type Borrowing from "@domain/entities/Borrowing.entity";
-import type { IBorrowingRepository } from "@domain/interfaces/repositories/IBorrowing.repository";
-import BorrowBooksUseCaseImpl from "@domain/useCases/BorrowBooksImpl.useCase";
-import ConfirmReturnUseCaseImpl from "@domain/useCases/ConfirmReturnImpl.useCase";
+import type { Borrowing } from "@domain/entities";
+import type { IBorrowingRepository } from "@domain/interfaces/repositories";
+import {
+  BorrowBooksUseCaseImpl,
+  ConfirmReturnUseCaseImpl,
+} from "@domain/useCases";
 
-class BorrowingService {
+export class BorrowingService {
   constructor(private borrowingRepository: IBorrowingRepository) {
     this.borrowBooksUseCase = new BorrowBooksUseCaseImpl(
       this.borrowingRepository,
@@ -30,5 +32,3 @@ class BorrowingService {
     return this.confirmReturnUseCase.execute(userId, bookId);
   }
 }
-
-export default BorrowingService;

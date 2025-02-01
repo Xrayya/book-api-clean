@@ -1,7 +1,8 @@
-import type Book from "@domain/entities/Book.entity";
-import type Borrowing from "@domain/entities/Borrowing.entity";
-import type User from "@domain/entities/User.entity";
+import type { Borrowing } from "@domain/entities";
 
 export interface IBorrowBooksUseCase {
-  execute(userId: User["id"], bookIds: Book["id"][]): Promise<Borrowing[]>;
+  execute(
+    userId: Borrowing["user"]["id"],
+    bookIds: Borrowing["book"]["id"][],
+  ): Promise<Borrowing[]>;
 }

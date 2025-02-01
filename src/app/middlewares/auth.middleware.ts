@@ -1,5 +1,5 @@
 import { tokenizer } from "@app/bootstrap";
-import type User from "@domain/entities/User.entity";
+import type { User } from "@domain/entities";
 import { AuthenticationException } from "@exceptions/Auth.exception";
 import { createMiddleware } from "hono/factory";
 import type { JwtPayload } from "jsonwebtoken";
