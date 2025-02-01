@@ -19,7 +19,7 @@ backendApp.use(logger());
 
 backendApp.route("/auth", authRoute);
 backendApp.route("/books", booksRoute);
-backendApp.route("/borrowing", borrowingRoute);
+backendApp.route("/books/borrowing", borrowingRoute);
 backendApp.route("/user", userRoute);
 
 backendApp.onError((err, c) => {
