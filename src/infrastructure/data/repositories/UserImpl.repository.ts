@@ -13,13 +13,11 @@ export class UserRepositoryImpl implements IUserRepository {
 
   private dbToEntity({
     role: roleString,
-    suspended: isSuspended,
     ...rest
   }: Prisma.UserGetPayload<{}>): User {
     return {
       ...rest,
       role: roleString === "ADMIN" ? UserRole.ADMIN : UserRole.CLIENT,
-      isSuspended,
     };
   }
 
@@ -62,12 +60,9 @@ export class UserRepositoryImpl implements IUserRepository {
     return result.password;
   }
 
-  async add({
-    isSuspended: suspended,
-    ...rest
-  }: Omit<User, "id" | "createdAt" | "updatedAt">): Promise<User> {
+  async add(item: Omit<User, "id" | "createdAt" | "updatedAt">): Promise<User> {
     const result = await this.prisma.user.create({
-      data: { suspended, ...rest },
+      data: item,
     });
 
     return this.dbToEntity(result);
@@ -75,14 +70,11 @@ export class UserRepositoryImpl implements IUserRepository {
 
   async update(
     id: number,
-    {
-      isSuspended: suspended,
-      ...rest
-    }: Partial<Omit<User, "id" | "createdAt" | "updatedAt">>,
+    item: Partial<Omit<User, "id" | "createdAt" | "updatedAt">>,
   ): Promise<User> {
     const result = await this.prisma.user.update({
       where: { id },
-      data: { suspended, ...rest },
+      data: item,
     });
 
     return this.dbToEntity(result);
