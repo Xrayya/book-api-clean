@@ -1,4 +1,4 @@
-import BookCategory from "@domain/enums/BookCategory.enum";
+import { BookCategory } from "@domain/enums";
 
 const codeToBookCategory: { [key: string]: BookCategory } = {
   "000": BookCategory.GENERAL_WORK,
