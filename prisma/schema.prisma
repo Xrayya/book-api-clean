@@ -33,7 +33,7 @@ model Book {
   id            Int      @id @default(autoincrement())
   title         String
   author        String
-  ISBN          String   @unique @map("isbn")
+  ISBN          String   @map("isbn")
   publisher     String
   publishedYear Int      @map("published_year")
   categoryCode  String   @map("category_code")
