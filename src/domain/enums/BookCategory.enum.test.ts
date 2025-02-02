@@ -1,5 +1,5 @@
 import { expect, test, describe } from "bun:test";
-import BookCategory from "./BookCategory.enum";
+import { BookCategory } from "./BookCategory.enum";
 
 describe("BookCategory Enum", () => {
   test("Should have 4 categories", () => {
