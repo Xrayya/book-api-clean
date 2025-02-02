@@ -1,6 +1,6 @@
-import UserRole from "@domain/enums/UserRole.enum";
-import { expect, test, describe } from "bun:test";
-import User from "./User.entity";
+import { UserRole } from "@domain/enums";
+import { describe, expect, test } from "bun:test";
+import { User } from "./User.entity";
 
 describe("User Entity", () => {
   test("Initiate user entity return proper user object", () => {

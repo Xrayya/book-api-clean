@@ -1,9 +1,8 @@
-import { expect, test, describe } from "bun:test";
-import User from "./User.entity";
-import UserRole from "@domain/enums/UserRole.enum";
-import Book from "./Book.entity";
-import BookCategory from "@domain/enums/BookCategory.enum";
-import Borrowing from "./Borrowing.entity";
+import { BookCategory, UserRole } from "@domain/enums";
+import { describe, expect, test } from "bun:test";
+import { Book } from "./Book.entity";
+import { Borrowing } from "./Borrowing.entity";
+import { User } from "./User.entity";
 
 describe("Borrowing Entity", () => {
   test("Initiate borrowing entity return proper borrowing object", () => {

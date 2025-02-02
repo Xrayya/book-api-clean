@@ -1,6 +1,6 @@
-import { expect, test, describe } from "bun:test";
-import Book from "./Book.entity";
-import BookCategory from "@domain/enums/BookCategory.enum";
+import { BookCategory } from "@domain/enums";
+import { describe, expect, test } from "bun:test";
+import { Book } from "./Book.entity";
 
 describe("Book Entity", () => {
   test("Initiate book entity return proper book object", () => {
