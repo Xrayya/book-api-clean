@@ -1,5 +1,5 @@
 import backendApp from "@app/app";
-import JWTTokenizer from "@infrastructure/tokenizer/jwt.tokenizer";
+import { JWTTokenizer } from "@infrastructure/tokenizer/jwt.tokenizer";
 import { PrismaClient } from "@prisma/client";
 import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 
@@ -13,7 +13,7 @@ describe("Auth routes", () => {
       await prisma.user.delete({
         where: { email: "uniquetestemailuser209384091903810923@example.com" },
       });
-    } catch (error) { }
+    } catch (error) {}
   });
 
   afterAll(async () => {
@@ -21,7 +21,7 @@ describe("Auth routes", () => {
       await prisma.user.delete({
         where: { email: "uniquetestemailuser209384091903810923@example.com" },
       });
-    } catch (error) { }
+    } catch (error) {}
   });
 
   test("should return user info correctly when register with correct credentials", async () => {
@@ -51,7 +51,7 @@ describe("Auth routes", () => {
     expect(userCreated.user).toHaveProperty("name");
     expect(userCreated.user.name).toBe("uniquetest");
     expect(userCreated.user).toHaveProperty("role");
-    expect(userCreated.user.role).toBe("client");
+    expect(userCreated.user.role).toBe("CLIENT");
     expect(userCreated.user).toHaveProperty("token");
     expect(userCreated.user.token).toBe(null);
     expect(userCreated.user).toHaveProperty("isSuspended");
@@ -88,7 +88,7 @@ describe("Auth routes", () => {
     expect(userLoggedIn.user).toHaveProperty("name");
     expect(userLoggedIn.user.name).toBe("uniquetest");
     expect(userLoggedIn.user).toHaveProperty("role");
-    expect(userLoggedIn.user.role).toBe("client");
+    expect(userLoggedIn.user.role).toBe("CLIENT");
     expect(userLoggedIn.user).toHaveProperty("isSuspended");
     expect(userLoggedIn.user.isSuspended).toBe(false);
     expect(userLoggedIn).toHaveProperty("token");
