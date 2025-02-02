@@ -1,5 +1,5 @@
 import { test, expect, describe } from "bun:test";
-import UserRole from "./UserRole.enum";
+import { UserRole } from "./UserRole.enum";
 
 describe("UserRole Enum", () => {
   test("Should have 2 roles", () => {
@@ -7,7 +7,7 @@ describe("UserRole Enum", () => {
   });
 
   test("Should have all 2 roles with appropriate code", () => {
-    expect(UserRole.ADMIN.valueOf()).toBe("admin");
-    expect(UserRole.CLIENT.valueOf()).toBe("client");
+    expect(UserRole.ADMIN.valueOf()).toBe("ADMIN");
+    expect(UserRole.CLIENT.valueOf()).toBe("CLIENT");
   });
 });
