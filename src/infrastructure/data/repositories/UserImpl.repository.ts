@@ -11,7 +11,7 @@ export class UserRepositoryImpl implements IUserRepository {
 
   private prisma: PrismaClient;
 
-  private dbToEntityRemap({
+  private dbToEntity({
     role: roleString,
     suspended: isSuspended,
     ...rest
@@ -33,7 +33,7 @@ export class UserRepositoryImpl implements IUserRepository {
         throw new UserNotFoundException();
       }
 
-      return this.dbToEntityRemap(result);
+      return this.dbToEntity(result);
     } else if (typeof arg === "string") {
       const result = await this.prisma.user.findUnique({
         where: { email: arg },
@@ -43,7 +43,7 @@ export class UserRepositoryImpl implements IUserRepository {
         throw new UserNotFoundException();
       }
 
-      return this.dbToEntityRemap(result);
+      return this.dbToEntity(result);
     }
 
     throw new Error("Undefined error");
@@ -62,32 +62,40 @@ export class UserRepositoryImpl implements IUserRepository {
     return result.password;
   }
 
-  async add(item: Omit<User, "id" | "createdAt" | "updatedAt">): Promise<User> {
-    const result = await this.prisma.user.create({ data: item });
+  async add({
+    isSuspended: suspended,
+    ...rest
+  }: Omit<User, "id" | "createdAt" | "updatedAt">): Promise<User> {
+    const result = await this.prisma.user.create({
+      data: { suspended, ...rest },
+    });
 
-    return this.dbToEntityRemap(result);
+    return this.dbToEntity(result);
   }
 
   async update(
     id: number,
-    { role, ...rest }: Partial<Omit<User, "id" | "createdAt" | "updatedAt">>,
+    {
+      isSuspended: suspended,
+      ...rest
+    }: Partial<Omit<User, "id" | "createdAt" | "updatedAt">>,
   ): Promise<User> {
     const result = await this.prisma.user.update({
       where: { id },
-      data: { role: role === UserRole.ADMIN ? "ADMIN" : "CLIENT", ...rest },
+      data: { suspended, ...rest },
     });
 
-    return this.dbToEntityRemap(result);
+    return this.dbToEntity(result);
   }
 
   async delete(id: number): Promise<User> {
     const result = await this.prisma.user.delete({ where: { id } });
 
-    return this.dbToEntityRemap(result);
+    return this.dbToEntity(result);
   }
   async getAll(): Promise<User[]> {
     const result = await this.prisma.user.findMany();
 
-    return result.map(this.dbToEntityRemap);
+    return result.map(this.dbToEntity);
   }
 }
