@@ -2,7 +2,6 @@ import { bookCategoryCodeMapper } from "@/utils";
 import backendApp from "@app/app";
 import { Book } from "@domain/entities";
 import { BookCategory } from "@domain/enums";
-import { JWTTokenizer } from "@infrastructure/tokenizer/jwt.tokenizer";
 import { PrismaClient } from "@prisma/client";
 import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 
@@ -145,7 +144,7 @@ const mockBooks: Book[] = [
 
 let bookData: Book[];
 
-describe("Auth routes", () => {
+describe("Books routes", () => {
   beforeAll(async () => {
     try {
       await prisma.bookCategory.createMany({
@@ -177,7 +176,7 @@ describe("Auth routes", () => {
           },
         ],
       });
-    } catch (error) { }
+    } catch (error) {}
 
     try {
       const books = await prisma.book.createManyAndReturn({
@@ -204,7 +203,7 @@ describe("Auth routes", () => {
         ),
       });
 
-      console.log(books);
+      // console.log(books);
 
       bookData = books.map(({ categoryCode, ...rest }) => ({
         ...rest,
@@ -218,7 +217,11 @@ describe("Auth routes", () => {
   afterAll(async () => {
     try {
       await prisma.book.deleteMany({});
-    } catch (error) { }
+    } catch (error) {}
+
+    try {
+      await prisma.bookCategory.deleteMany({});
+    } catch (error) {}
   });
 
   test("should return books correctly", async () => {
@@ -250,4 +253,8 @@ describe("Auth routes", () => {
       );
     });
   });
+
+  // TODO: (optional) test GET /api/books?search=...
+  // TODO: test GET /api/books/:id
+  // TODO: test POST /api/books
 });
