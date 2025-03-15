@@ -4,7 +4,6 @@ import {
   validateJsonRequest,
   validateRequest,
   verifyAdmin,
-  verifyAuth,
 } from "@app/middlewares";
 import {
   addBookSchema,
@@ -14,7 +13,6 @@ import {
 import { Hono } from "hono";
 
 export const booksRoute = new Hono()
-  .use(verifyAuth)
   .get("/", ...validateRequest(getBooksSchema), async (c) => {
     const {
       search,
