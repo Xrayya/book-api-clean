@@ -4,6 +4,7 @@ import {
   validateJsonRequest,
   validateRequest,
   verifyAdmin,
+  verifyAuth,
 } from "@app/middlewares";
 import {
   addBookSchema,
@@ -56,7 +57,7 @@ export const booksRoute = new Hono()
 
     return c.json({ book }, 200);
   })
-  .post("/", verifyAdmin, ...validateJsonRequest(addBookSchema), async (c) => {
+  .post("/", verifyAuth, verifyAdmin, ...validateJsonRequest(addBookSchema), async (c) => {
     const { title, author, category, publishedYear, ISBN, edition, publisher } =
       c.req.valid("json");
     const book = await bookService.add(
