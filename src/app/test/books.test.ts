@@ -1,5 +1,6 @@
 import { bookCategoryCodeMapper } from "@/utils";
 import backendApp from "@app/app";
+import { authService } from "@app/bootstrap";
 import { Book } from "@domain/entities";
 import { BookCategory } from "@domain/enums";
 import { PrismaClient } from "@prisma/client";
@@ -176,7 +177,7 @@ describe("Books routes", () => {
           },
         ],
       });
-    } catch (error) {}
+    } catch (error) { }
 
     try {
       const books = await prisma.book.createManyAndReturn({
@@ -203,25 +204,53 @@ describe("Books routes", () => {
         ),
       });
 
-      // console.log(books);
-
       bookData = books.map(({ categoryCode, ...rest }) => ({
         ...rest,
         category: bookCategoryCodeMapper(categoryCode),
       }));
-    } catch (error) {
-      console.error(error);
-    }
+    } catch (error) { }
+
+    try {
+      await prisma.user.delete({
+        where: { email: "uniquetestemailuser209384091903810923@example.com" },
+      });
+    } catch (error) { }
+
+    try {
+      await authService.register(
+        "uniquetest",
+        "uniquetestemailuser209384091903810923@example.com",
+        "Password01",
+      );
+
+      await prisma.user.update({
+        where: { email: "uniquetestemailuser209384091903810923@example.com" },
+        data: { role: "ADMIN" },
+      });
+
+      const { token } = await authService.login(
+        "uniquetestemailuser209384091903810923@example.com",
+        "Password01",
+      );
+
+      validToken = token;
+    } catch (error) { }
   });
 
   afterAll(async () => {
     try {
       await prisma.book.deleteMany({});
-    } catch (error) {}
+    } catch (error) { }
 
     try {
       await prisma.bookCategory.deleteMany({});
-    } catch (error) {}
+    } catch (error) { }
+
+    try {
+      await prisma.user.delete({
+        where: { email: "uniquetestemailuser209384091903810923@example.com" },
+      });
+    } catch (error) { }
   });
 
   test("should return books correctly", async () => {
@@ -255,6 +284,76 @@ describe("Books routes", () => {
   });
 
   // TODO: (optional) test GET /api/books?search=...
-  // TODO: test GET /api/books/:id
-  // TODO: test POST /api/books
+
+  test("should return book with correct id", async () => {
+    const randomIdx = Math.floor(Math.random() * (bookData.length - 1));
+
+    const res = await backendApp.request(
+      `/api/books/${bookData[randomIdx].id}`,
+    );
+
+    const resJson = await res.json();
+
+    expect(res.status).toBe(200);
+    expect(resJson).toHaveProperty("book");
+    expect(resJson.book).toBeObject();
+
+    const book = resJson.book;
+
+    expect(book.id).toBe(bookData[randomIdx].id);
+    expect(book.title).toBe(bookData[randomIdx].title);
+    expect(book.author).toBe(bookData[randomIdx].author);
+    expect(book.ISBN).toBe(bookData[randomIdx].ISBN);
+    expect(book.publisher).toBe(bookData[randomIdx].publisher);
+    expect(book.publishedYear).toBe(bookData[randomIdx].publishedYear);
+    expect(book.category).toBe(bookData[randomIdx].category);
+    expect(book.edition).toBe(bookData[randomIdx].edition);
+    expect(book.available).toBe(bookData[randomIdx].available);
+    expect(new Date(book.createdAt).toISOString()).toBe(
+      bookData[randomIdx]!.createdAt.toISOString(),
+    );
+    expect(new Date(book.updatedAt).toISOString()).toBe(
+      bookData[randomIdx]!.updatedAt.toISOString(),
+    );
+  });
+
+  test("should add new book with correct data", async () => {
+
+    const res = await backendApp.request("/api/books", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${validToken}`,
+      },
+      body: JSON.stringify({
+        title: "The Lord of the Rings",
+        author: "J.R.R. Tolkien",
+        category: "700",
+        publishedYear: 1954,
+        ISBN: "9780547928210",
+        edition: 1,
+        publisher: "George Allen & Unwin",
+      }),
+    });
+
+    const resJson = await res.json();
+
+    expect(res.status).toBe(201);
+    expect(resJson).toHaveProperty("book");
+    expect(resJson.book).toBeObject();
+
+    const book = resJson.book;
+
+    expect(book.id).toBeInteger();
+    expect(book.title).toBe("The Lord of the Rings");
+    expect(book.author).toBe("J.R.R. Tolkien");
+    expect(book.ISBN).toBe("9780547928210");
+    expect(book.publisher).toBe("George Allen & Unwin");
+    expect(book.publishedYear).toBe(1954);
+    expect(book.category).toBe("700");
+    expect(book.edition).toBe(1);
+    expect(book.available).toBe(true);
+    expect(Date.parse(book.createdAt)).not.toBeNaN();
+    expect(Date.parse(book.updatedAt)).not.toBeNaN();
+  });
 });
