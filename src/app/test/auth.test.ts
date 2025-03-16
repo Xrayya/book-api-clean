@@ -37,29 +37,29 @@ describe("Auth routes", () => {
       }),
     });
 
-    const userCreated = await res.json();
+    const resJson = await res.json();
 
     expect(res.status).toBe(201);
-    expect(userCreated).toHaveProperty("user");
-    expect(userCreated.user).toBeObject();
-    expect(userCreated.user).toHaveProperty("id");
-    expect(userCreated.user.id).toBeInteger();
-    expect(userCreated.user).toHaveProperty("email");
-    expect(userCreated.user.email).toBe(
+    expect(resJson).toHaveProperty("user");
+    expect(resJson.user).toBeObject();
+    expect(resJson.user).toHaveProperty("id");
+    expect(resJson.user.id).toBeInteger();
+    expect(resJson.user).toHaveProperty("email");
+    expect(resJson.user.email).toBe(
       "uniquetestemailuser209384091903810923@example.com",
     );
-    expect(userCreated.user).toHaveProperty("name");
-    expect(userCreated.user.name).toBe("uniquetest");
-    expect(userCreated.user).toHaveProperty("role");
-    expect(userCreated.user.role).toBe("CLIENT");
-    expect(userCreated.user).toHaveProperty("token");
-    expect(userCreated.user.token).toBe(null);
-    expect(userCreated.user).toHaveProperty("isSuspended");
-    expect(userCreated.user.isSuspended).toBe(false);
-    expect(userCreated.user).toHaveProperty("createdAt");
-    expect(Date.parse(userCreated.user.createdAt)).not.toBeNaN();
-    expect(userCreated.user).toHaveProperty("updatedAt");
-    expect(Date.parse(userCreated.user.updatedAt)).not.toBeNaN();
+    expect(resJson.user).toHaveProperty("name");
+    expect(resJson.user.name).toBe("uniquetest");
+    expect(resJson.user).toHaveProperty("role");
+    expect(resJson.user.role).toBe("CLIENT");
+    expect(resJson.user).toHaveProperty("token");
+    expect(resJson.user.token).toBe(null);
+    expect(resJson.user).toHaveProperty("isSuspended");
+    expect(resJson.user.isSuspended).toBe(false);
+    expect(resJson.user).toHaveProperty("createdAt");
+    expect(Date.parse(resJson.user.createdAt)).not.toBeNaN();
+    expect(resJson.user).toHaveProperty("updatedAt");
+    expect(Date.parse(resJson.user.updatedAt)).not.toBeNaN();
   });
 
   test("should return user info and token correctly when login with correct credentials", async () => {
@@ -74,36 +74,36 @@ describe("Auth routes", () => {
       }),
     });
 
-    const userLoggedIn = await res.json();
+    const resJson = await res.json();
 
     expect(res.status).toBe(200);
-    expect(userLoggedIn).toHaveProperty("user");
-    expect(userLoggedIn.user).toBeObject();
-    expect(userLoggedIn.user).toHaveProperty("id");
-    expect(userLoggedIn.user.id).toBeInteger();
-    expect(userLoggedIn.user).toHaveProperty("email");
-    expect(userLoggedIn.user.email).toBe(
+    expect(resJson).toHaveProperty("user");
+    expect(resJson.user).toBeObject();
+    expect(resJson.user).toHaveProperty("id");
+    expect(resJson.user.id).toBeInteger();
+    expect(resJson.user).toHaveProperty("email");
+    expect(resJson.user.email).toBe(
       "uniquetestemailuser209384091903810923@example.com",
     );
-    expect(userLoggedIn.user).toHaveProperty("name");
-    expect(userLoggedIn.user.name).toBe("uniquetest");
-    expect(userLoggedIn.user).toHaveProperty("role");
-    expect(userLoggedIn.user.role).toBe("CLIENT");
-    expect(userLoggedIn.user).toHaveProperty("isSuspended");
-    expect(userLoggedIn.user.isSuspended).toBe(false);
-    expect(userLoggedIn).toHaveProperty("token");
-    expect(userLoggedIn.token).toBeString();
+    expect(resJson.user).toHaveProperty("name");
+    expect(resJson.user.name).toBe("uniquetest");
+    expect(resJson.user).toHaveProperty("role");
+    expect(resJson.user.role).toBe("CLIENT");
+    expect(resJson.user).toHaveProperty("isSuspended");
+    expect(resJson.user.isSuspended).toBe(false);
+    expect(resJson).toHaveProperty("token");
+    expect(resJson.token).toBeString();
 
     const expectedToken = new JWTTokenizer().encode({
-      id: userLoggedIn.user.id,
-      name: userLoggedIn.user.name,
-      email: userLoggedIn.user.email,
-      role: userLoggedIn.user.role,
+      id: resJson.user.id,
+      name: resJson.user.name,
+      email: resJson.user.email,
+      role: resJson.user.role,
     });
 
-    expect(userLoggedIn.token).toBe(expectedToken);
+    expect(resJson.token).toBe(expectedToken);
 
-    validToken = userLoggedIn.token;
+    validToken = resJson.token;
   });
 
   test("should return true when logout with correct token", async () => {
@@ -113,10 +113,10 @@ describe("Auth routes", () => {
       },
     });
 
-    const loggedOutInfo = await res.json();
+    const resJson = await res.json();
 
     expect(res.status).toBe(200);
-    expect(loggedOutInfo).toHaveProperty("isLoggedOut");
-    expect(loggedOutInfo.isLoggedOut).toBe(true);
+    expect(resJson).toHaveProperty("isLoggedOut");
+    expect(resJson.isLoggedOut).toBe(true);
   });
 });
