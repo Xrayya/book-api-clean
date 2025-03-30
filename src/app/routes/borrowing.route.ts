@@ -13,9 +13,10 @@ export const borrowingRoute = new Hono()
   .post("/", verifyClient, ...validateJsonRequest(borrowSchema), async (c) => {
     const { bookIds } = c.req.valid("json");
     const { id } = c.get("authUser");
-    const borrowing = await borrowingService.borrowMany(id, bookIds);
 
-    return c.json({ borrowedBooks: borrowing }, 201);
+    const borrowings = await borrowingService.borrowMany(id, bookIds);
+
+    return c.json({ borrowedBooks: borrowings }, 201);
   })
   .post(
     "/return",
