@@ -5,6 +5,27 @@ import {
   ConfirmReturnUseCaseImpl,
 } from "@domain/useCases";
 
+type BorrowedBook = {
+  id: Borrowing["id"];
+  borrower: {
+    userId: Borrowing["user"]["id"];
+    userEmail: Borrowing["user"]["email"];
+    userName: Borrowing["user"]["name"];
+  };
+  bookId: Borrowing["book"]["id"];
+  category: Borrowing["book"]["category"];
+  title: Borrowing["book"]["title"];
+  author: Borrowing["book"]["author"];
+  ISBN: Borrowing["book"]["ISBN"];
+  publisher: Borrowing["book"]["publisher"];
+  publishedYear: Borrowing["book"]["publishedYear"];
+  edition: Borrowing["book"]["edition"];
+  createdAt: Borrowing["createdAt"];
+  updatedAt: Borrowing["updatedAt"];
+  borrowDate: Borrowing["borrowDate"];
+  returnDate: Borrowing["returnDate"];
+};
+
 export class BorrowingService {
   constructor(private borrowingRepository: IBorrowingRepository) {
     this.borrowBooksUseCase = new BorrowBooksUseCaseImpl(
@@ -21,8 +42,51 @@ export class BorrowingService {
   async borrowMany(
     userId: Borrowing["user"]["id"],
     bookIds: Borrowing["book"]["id"][],
-  ): Promise<Borrowing[]> {
-    return this.borrowBooksUseCase.execute(userId, bookIds);
+  ): Promise<BorrowedBook[]> {
+    const borrowingData = await this.borrowBooksUseCase.execute(
+      userId,
+      bookIds,
+    );
+
+    return borrowingData.map(
+      ({
+        id,
+        book: {
+          id: bookId,
+          category,
+          title,
+          author,
+          ISBN,
+          publisher,
+          publishedYear,
+          edition,
+        },
+        user: { id: userId, email: userEmail, name: userName },
+        createdAt,
+        updatedAt,
+        borrowDate,
+        returnDate,
+      }) => ({
+        id,
+        borrower: {
+          userId,
+          userEmail,
+          userName,
+        },
+        bookId,
+        category,
+        title,
+        author,
+        ISBN,
+        publisher,
+        publishedYear,
+        edition,
+        createdAt,
+        updatedAt,
+        borrowDate,
+        returnDate,
+      }),
+    );
   }
 
   async confirmReturn(
