@@ -40,11 +40,11 @@ export class BorrowingService {
   private confirmReturnUseCase: ConfirmReturnUseCaseImpl;
 
   async borrowMany(
-    userId: Borrowing["user"]["id"],
+    clientId: Borrowing["user"]["id"],
     bookIds: Borrowing["book"]["id"][],
   ): Promise<BorrowedBook[]> {
     const borrowingData = await this.borrowBooksUseCase.execute(
-      userId,
+      clientId,
       bookIds,
     );
 
@@ -90,9 +90,9 @@ export class BorrowingService {
   }
 
   async confirmReturn(
-    userId: Borrowing["user"]["id"],
+    clientId: Borrowing["user"]["id"],
     bookId: Borrowing["book"]["id"],
   ): Promise<Borrowing> {
-    return this.confirmReturnUseCase.execute(userId, bookId);
+    return this.confirmReturnUseCase.execute(clientId, bookId);
   }
 }
