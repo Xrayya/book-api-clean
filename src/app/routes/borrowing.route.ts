@@ -23,9 +23,8 @@ export const borrowingRoute = new Hono()
     verifyAdmin,
     ...validateJsonRequest(returnSchema),
     async (c) => {
-      const { bookId } = c.req.valid("json");
-      const { id } = c.get("authUser");
-      const borrowing = await borrowingService.confirmReturn(id, bookId);
+      const { bookId, clientId } = c.req.valid("json");
+      const borrowing = await borrowingService.confirmReturn(clientId, bookId);
 
       return c.json({ returnedBook: borrowing }, 200);
     },
