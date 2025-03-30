@@ -4,6 +4,7 @@ import { BaseRequestSchema } from "../Base";
 export const returnSchema = new BaseRequestSchema({
   jsonSchema: z.object({
     bookId: z.number().int(),
+    clientId: z.number().int(),
   }),
   cookieSchema: z.object({}),
   formSchema: z.object({}),
