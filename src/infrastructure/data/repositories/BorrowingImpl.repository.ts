@@ -14,7 +14,7 @@ export class BorrowingRepositoryImpl implements IBorrowingRepository {
 
   private dbToEntityRemap({
     book: { categoryCode, ...bookRest },
-    user: { role: roleString, suspended: isSuspended, ...userRest },
+    user: { role: roleString, ...userRest },
     ...rest
   }: Prisma.BorrowingGetPayload<{
     include: { book: any; user: any };
@@ -23,7 +23,6 @@ export class BorrowingRepositoryImpl implements IBorrowingRepository {
       user: {
         ...userRest,
         role: roleString === "ADMIN" ? UserRole.ADMIN : UserRole.CLIENT,
-        isSuspended,
       },
       book: {
         category: bookCategoryCodeMapper(categoryCode),
