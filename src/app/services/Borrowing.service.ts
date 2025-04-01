@@ -5,7 +5,7 @@ import {
   ConfirmReturnUseCaseImpl,
 } from "@domain/useCases";
 
-type BorrowedBook = {
+export type BorrowedBook = {
   id: Borrowing["id"];
   borrower: {
     userId: Borrowing["user"]["id"];
@@ -92,7 +92,45 @@ export class BorrowingService {
   async confirmReturn(
     clientId: Borrowing["user"]["id"],
     bookId: Borrowing["book"]["id"],
-  ): Promise<Borrowing> {
-    return this.confirmReturnUseCase.execute(clientId, bookId);
+  ): Promise<BorrowedBook> {
+    const {
+      id,
+      book: {
+        id: returnedBookId,
+        category,
+        title,
+        author,
+        ISBN,
+        publisher,
+        publishedYear,
+        edition,
+      },
+      user: { id: userId, email: userEmail, name: userName },
+      createdAt,
+      updatedAt,
+      borrowDate,
+      returnDate,
+    } = await this.confirmReturnUseCase.execute(clientId, bookId);
+
+    return {
+      id,
+      borrower: {
+        userId,
+        userEmail,
+        userName,
+      },
+      bookId: returnedBookId,
+      category,
+      title,
+      author,
+      ISBN,
+      publisher,
+      publishedYear,
+      edition,
+      createdAt,
+      updatedAt,
+      borrowDate,
+      returnDate,
+    };
   }
 }
